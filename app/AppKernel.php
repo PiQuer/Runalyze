@@ -27,6 +27,7 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             new Bernard\BernardBundle\BernardBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new Runalyze\Bundle\GlossaryBundle\GlossaryBundle(),
+            new KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle(),
         ];
 
         if ('dev' == $this->getEnvironment()) {
