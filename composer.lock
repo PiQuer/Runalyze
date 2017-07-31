@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "46f8d1074995815d965efcf88d080df4",
+    "content-hash": "304187ca2ccc70d9aff43754b69a13ee",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2585,6 +2585,56 @@
             "time": "2017-07-14 10:21:34"
         },
         {
+            "name": "runalyze/oauth2-tomtom-mysports",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Runalyze/oauth2-tomtom-mysports.git",
+                "reference": "e6b78d986395a7333160871f87ff706e0bcd3a5d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Runalyze/oauth2-tomtom-mysports/zipball/e6b78d986395a7333160871f87ff706e0bcd3a5d",
+                "reference": "e6b78d986395a7333160871f87ff706e0bcd3a5d",
+                "shasum": ""
+            },
+            "require": {
+                "league/oauth2-client": "~2.2",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "^5.0",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\OAuth2\\Client\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Pohl",
+                    "email": "michael@mipapo.de"
+                }
+            ],
+            "description": "TomTom MySports OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+            "keywords": [
+                "Authentication",
+                "authorization",
+                "client",
+                "oauth",
+                "oauth2",
+                "tomtomMySports"
+            ],
+            "time": "2017-07-31 18:24:54"
+        },
+        {
             "name": "sensio/framework-extra-bundle",
             "version": "v3.0.16",
             "source": {
@@ -4881,6 +4931,7 @@
         "swiftmailer/swiftmailer": 0,
         "jms/translation-bundle": 20,
         "runalyze/glossary": 20,
+        "runalyze/oauth2-tomtom-mysports": 20,
         "runalyze/playground": 20
     },
     "prefer-stable": true,

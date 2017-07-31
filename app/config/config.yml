@@ -5,6 +5,7 @@ imports:
   - { resource: queue.yml }
   - { resource: default_config.yml }
   - { resource: ../../data/config.yml }
+  - { resource: oauth2_clients.yml }
 
 framework:
   secret: ThisTokenIsNotSoSecretChangeIt

@@ -39,3 +39,6 @@ parameters:
   router.request_context.base_url:
   session.handler_id: session.handler.native_file
   redis.default.dsn: redis://localhost
+  tomtom_mysports_client_id:
+  tomtom_mysports_client_secret:
+
