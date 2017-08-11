@@ -6,4 +6,4 @@ knpu_oauth2_client:
              client_id: %tomtom_mysports_client_id%
              client_secret: %tomtom_mysports_client_secret%
              redirect_route: connect_tomtom_mysports_check
-             redirect_params: {}
+             provider_options: { apikey: %tomtom_mysports_apikey% }
