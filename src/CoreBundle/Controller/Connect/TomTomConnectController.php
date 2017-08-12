@@ -5,8 +5,10 @@ namespace Runalyze\Bundle\CoreBundle\Controller\Connect;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Runalyze\Profile\SyncProvider;
+
 
 /**
  * Class TomTomConnectController
@@ -31,13 +33,28 @@ class TomTomConnectController extends Controller
      */
     public function connectCheckAction(Request $request)
     {
-        $client = $this->get('oauth2.registry')->getClient('tomtomMySports');
-        $accessToken = $client->getAccessToken();
+        /** @var \League\OAuth2\Client\Provider\TomTomMySports $client */
+        $client = $this->get('oauth2.registry')
+            ->getClient('tomtomMySports');
 
-        // $accessToken->getToken()  store AccessToken
-        // $accessToken->getRefreshToken()  storeRefreshToken
-        // $accessToken->getExpires()  storeExpirationDate (don't know if it is for Token or RefreshToken)
-        //SyncProvider::TOMTOM_MYSPORTS;
+        try {
+            // the exact class depends on which provider you're using
+            /** @var \League\OAuth2\Client\Provider\FacebookUser $user */
+            #    $user = $client->getApiVersion();
+            echo $client->getAccessToken();
+            return new JsonResponse();
+
+
+            // do something with all this new power!
+            //$user->getFirstName();
+            // ...
+        } catch (IdentityProviderException $e) {
+            // something went wrong!
+            // probably you should return the reason to the user
+            $e->getMessage();die;
+        }
+
+
 
     }
 }
