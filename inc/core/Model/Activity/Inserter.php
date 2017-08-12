@@ -167,7 +167,7 @@ class Inserter extends Model\InserterWithAccountID {
 	protected function calculateCaloriesIfZero() {
 		if ($this->Object->energy() == 0 && $this->Object->sportid() > 0) {
 			$Factory = \Runalyze\Context::Factory();
-			$calories = $Factory->sport($this->Object->sportid())->caloriesPerHour() * $this->Object->duration() / 3600;
+			$calories = intval($Factory->sport($this->Object->sportid())->caloriesPerHour() * $this->Object->duration()) / 3600;
 
 			$this->Object->set(Entity::ENERGY, $calories > 0 ? $calories : null);
 		}
