@@ -32,7 +32,8 @@
         "snc/redis-bundle": "2.*",
         "predis/predis": "^1.0",
         "knpuniversity/oauth2-client-bundle": "^1.10",
-        "runalyze/oauth2-tomtom-mysports": "dev-master"
+        "runalyze/oauth2-tomtom-mysports": "dev-master",
+        "defuse/php-encryption": "^2.1"
     },
     "autoload": {
         "files": ["src/functions.php", "app/AppKernel.php"],
