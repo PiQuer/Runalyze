@@ -2,22 +2,35 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller\Connect;
 
+use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\ConnectedClientMessage;
+use Runalyze\Bundle\CoreBundle\Entity\AccountClient;
+use Runalyze\Bundle\CoreBundle\Entity\NotificationRepository;
+use Runalyze\Sync\Provider\TomTomMySports;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Runalyze\Profile\SyncProvider;
+use Runalyze\Profile\Sync\SyncProvider;
+use Runalyze\Bundle\CoreBundle\Entity\Notification;
 
 
 /**
  * Class TomTomConnectController
- * @author Hannes Christiansen <hannes@runalyze.de>
- * @author Michael Pohl <michael@runalyze.de>
+ * @author Hannes Christiansen <hannes@runalyze.com>
+ * @author Michael Pohl <michael@runalyze.com>
  * @package Runalyze\Bundle\CoreBundle\Controller\Connect
  */
 class TomTomConnectController extends Controller
 {
+    /**
+     * @return NotificationRepository
+     */
+    protected function getNotificationRepository()
+    {
+        return $this->getDoctrine()->getRepository('CoreBundle:Notification');
+    }
+
     /**
      * @Route("/connect/tomtomMySports")
      */
@@ -31,28 +44,32 @@ class TomTomConnectController extends Controller
     /**
      * @Route("/connect/tomtomMySports/check", name="connect_tomtom_mysports_check")
      */
-    public function connectCheckAction(Request $request)
+    public function connectCheckAction(Request $request, Account $account)
     {
         /** @var \League\OAuth2\Client\Provider\TomTomMySports $client */
         $client = $this->get('oauth2.registry')
             ->getClient('tomtomMySports');
 
         try {
-            // the exact class depends on which provider you're using
-            /** @var \League\OAuth2\Client\Provider\FacebookUser $user */
-            #    $user = $client->getApiVersion();
-            echo $client->getAccessToken();
-            return new JsonResponse();
+            $token =  $client->getAccessToken();
+            $AccountClient = new AccountClient();
+            $AccountClient->setAccount();
+            $AccountClient->setToken($token->getRefreshToken());
+            $AccountClient->setProvider(SyncProvider::TOMTOM_MYSPORTS);
+
+            $this->getNotificationRepository->save(
+                Notification::createFromMessage(new ConnectedClientMessage(SyncProvider::TOMTOM_MYSPORTS, ConnectedClientMessage::STATE_SUCCESS ), $account)
+            );
 
 
-            // do something with all this new power!
-            //$user->getFirstName();
-            // ...
+
         } catch (IdentityProviderException $e) {
-            // something went wrong!
-            // probably you should return the reason to the user
-            $e->getMessage();die;
+            $this->getNotificationRepository->save(
+                Notification::createFromMessage(new ConnectedClientMessage(SyncProvider::TOMTOM_MYSPORTS, ConnectedClientMessage::STATE_FAILED), $account)
+            );
         }
+        return $this->redirectToRoute('dashboard');
+
 
 
 

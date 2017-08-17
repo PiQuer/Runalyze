@@ -14,4 +14,7 @@ class MessageTypeProfile extends AbstractEnum
 
 	/** @var int */
 	const BACKUP_READY_MESSAGE = 3;
+
+	/** @var int */
+	const CONNECTED_CLIENT_MESSAGE = 4;
 }

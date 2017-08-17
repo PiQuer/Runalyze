@@ -4,6 +4,7 @@
 .settings/
 .build/
 php.ini
+.idea
 
 #Runalyze
 web/assets/v2.x/img/backgrounds/My-*

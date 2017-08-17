@@ -36,20 +36,18 @@ class AccountClientRepository extends EntityRepository
      * @param Account $account
      * @param int $provider
      * @param string $token
-     * @param string $value
      *
      * @return AccountClient
      */
-    public function updateOrInsert(Account $account, $provider, $token, $value)
+    public function updateOrInsert(Account $account, $provider, $token)
     {
         if (null === $accountClient = $this->findByAccountAndProvider($account, $provider)) {
             $accountClient = new AccountClient();
             $accountClient->setProvider($provider);
-            $accountClient->setToken($token);
             $accountClient->setAccount($account);
         }
 
-        $accountClient->setValue($value);
+        $accountClient->setToken($token);
         $this->save($accountClient);
 
         return $accountClient;

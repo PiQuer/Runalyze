@@ -70,6 +70,21 @@ class AccountClient
         return $this->provider;
     }
 
+
+    /**
+     * Set plain token
+     *
+     * @param string $plainToken
+     *
+     * @return AccountClient
+     */
+    public function setPlainToken($plainToken)
+    {
+        $this->plainToken = $plainToken;
+
+        return $this;
+    }
+
     /**
      * Set token
      *
