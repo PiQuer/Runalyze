@@ -7,31 +7,40 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * AccountClient
  *
- * @ORM\Table(name="account_client", indexes={@ORM\Index(name="accountid", columns={"account_id"})})
+ * @ORM\Table(name="account_client", indexes={@ORM\Index(name="accountid", columns={"account_id"})}, uniqueConstraints={@ORM\UniqueConstraint(name="unique_internal_id", columns={"account_id", "provider"})})
  * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\AccountClientRepository")
  */
 class AccountClient
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="provider_id", type="smallint", length=5, nullable=false)
+     * @ORM\Column(name="provider", type="smallint", length=5, nullable=false)
      */
     private $provider;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="token", type="string", length=200, nullable=false)
+     * @ORM\Column(name="refreshToken", type="string", length=200, nullable=false)
      */
-    private $token;
+    private $refreshToken;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="accountid", referencedColumnName="id", nullable=false)
+     *   @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $account;
@@ -86,27 +95,27 @@ class AccountClient
     }
 
     /**
-     * Set token
+     * Set refreshToken
      *
-     * @param string $token
+     * @param string $refreshToken
      *
      * @return AccountClient
      */
-    public function setToken($token)
+    public function setRefreshToken($refreshToken)
     {
-        $this->token = $token;
+        $this->refreshToken = $refreshToken;
 
         return $this;
     }
 
     /**
-     * Get token
+     * Get refreshToken
      *
      * @return string
      */
-    public function getToken()
+    public function getRefreshToken()
     {
-        return $this->token;
+        return $this->refreshToken;
     }
 
     /**

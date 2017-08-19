@@ -53,8 +53,8 @@ class TomTomConnectController extends Controller
         try {
             $token =  $client->getAccessToken();
             $AccountClient = new AccountClient();
-            $AccountClient->setAccount();
-            $AccountClient->setToken($token->getRefreshToken());
+            $AccountClient->setAccount($account);
+            $AccountClient->setRefreshToken($token->getRefreshToken());
             $token->getRefreshToken();
             $AccountClient->setProvider(SyncProvider::TOMTOM_MYSPORTS);
 //echo $token->getExpires();
