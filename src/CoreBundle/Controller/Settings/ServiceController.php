@@ -10,7 +10,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class ClientController extends Controller
+class ServiceController extends Controller
 {
     /**
      * @return AccountRepository
@@ -27,6 +27,7 @@ class ClientController extends Controller
     public function settingsAccountAction(Request $request, Account $account)
     {
         return $this->render('account/services.html.twig', [
+            'tomTomMySports' => !empty($this->getParameter('tomtom_mysports_client_id')) ? true : false
         ]);
     }
 }

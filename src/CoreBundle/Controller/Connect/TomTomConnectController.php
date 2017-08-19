@@ -32,7 +32,7 @@ class TomTomConnectController extends Controller
     }
 
     /**
-     * @Route("/connect/tomtomMySports")
+     * @Route("/connect/tomtomMySports", name="connect_tomtom_mysports")
      */
     public function connectAction()
     {
@@ -55,8 +55,9 @@ class TomTomConnectController extends Controller
             $AccountClient = new AccountClient();
             $AccountClient->setAccount();
             $AccountClient->setToken($token->getRefreshToken());
+            $token->getRefreshToken();
             $AccountClient->setProvider(SyncProvider::TOMTOM_MYSPORTS);
-
+//echo $token->getExpires();
             $this->getNotificationRepository->save(
                 Notification::createFromMessage(new ConnectedClientMessage(SyncProvider::TOMTOM_MYSPORTS, ConnectedClientMessage::STATE_SUCCESS ), $account)
             );

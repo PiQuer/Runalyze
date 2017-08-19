@@ -3,8 +3,9 @@
 namespace Runalyze\Sync\Provider;
 
 
-interface ActivitySyncInterface
+interface SyncInterface
 {
+
     /**
      * Fetch activity list of provider
      * @return

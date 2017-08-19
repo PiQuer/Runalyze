@@ -1,0 +1,27 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+<div class="panel-heading">
+    <h1>{% trans %}Services{% endtrans %}</h1>
+</div>
+    <p class="text">
+        {% trans %}Available services{% endtrans %}
+    </p>
+    {% set availablesServies = 0 %}
+    {% if tomTomMySports %}
+        {% set availablesServies = availableServices + 1 %}
+        <p class="">
+        <a href="#"  onclick="tomtom=window.open('{{ url('connect_tomtom_mysports') }}','MyWindow',width='350',height='350'); return false;">
+            <strong class="block"><img src="http://tomtomstg.prod.acquia-sites.com/sites/default/files/sports_logo_pl.jpg" width="300"></strong>
+            <small class="block">
+                {% trans %}Connect your TomTom MySports account and get your activities synced to RUNALYZE{% endtrans %}
+            </small>
+        </a>
+    </p>
+    {% endif %}
+
+    {% if availablesServies == 0 %}
+        <p class="info">{% trans %}Sorry, there are no services available you could connect with{% endtrans %}</p>
+    {% endif %}
+
+{% endblock %}

@@ -42,6 +42,7 @@
                     <?php endif; ?>
                 </li>
                 <li class="separator"></li>
+                <li><a class="window" href="<?php echo $this->get('router')->generate('settings-services'); ?>"><i class="fa fa-fw fa-refresh"></i>&nbsp;<?php _e('Connected services'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('settings-account'); ?>"><i class="fa fa-fw fa-cogs"></i>&nbsp;<?php _e('Account settings'); ?></a></li>
                 <li><a class="window" href="<?php echo $this->get('router')->generate('logout'); ?>"><i class="fa fa-fw fa-sign-out"></i>&nbsp;<?php _e('Logout'); ?></a></li>
             </ul>
