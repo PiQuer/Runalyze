@@ -7,12 +7,14 @@ use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Conf;
 use Runalyze\Bundle\CoreBundle\Entity\Equipment;
 use Runalyze\Bundle\CoreBundle\Entity\EquipmentType;
+use Runalyze\Bundle\CoreBundle\Entity\Hash;
 use Runalyze\Bundle\CoreBundle\Entity\Plugin;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\Type;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Parameter\Application\Timezone;
 use Runalyze\Profile\Sport\SportProfile;
+use Runalyze\Profile\System\Hash as ProfileHash;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class Registration
@@ -25,6 +27,9 @@ class Registration
 
     /** @var object[] */
     protected $specialVars;
+
+    /** @string Hash */
+    protected $activationHash;
 
     /**
      * @param ObjectManager $em
@@ -251,6 +256,18 @@ class Registration
         $this->em->clear();
     }
 
+    private function setActivationHash() {
+        $hash = new Hash();
+        $hash->setAccount($this->Account);
+        $hash->setType(ProfileHash::ACTIVATION);
+        $this->activationHash = $hash->getHash();
+        $this->em->persist($hash);
+    }
+
+    public function getActivationHash() {
+        return $this->activationHash;
+    }
+
     /**
      * @return Account
      */
@@ -258,6 +275,7 @@ class Registration
     {
         $this->em->persist($this->Account);
         $this->em->flush();
+        $this->setActivationHash();
         $this->setEmptyData();
 
         return $this->Account;

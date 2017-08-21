@@ -5,6 +5,7 @@ namespace Runalyze\Bundle\CoreBundle\Controller;
 use Runalyze\Activity\Distance;
 use Runalyze\Bundle\CoreBundle\Component\Account\Registration;
 use Runalyze\Bundle\CoreBundle\Form\RegistrationType;
+use Runalyze\Bundle\CoreBundle\Services\AccountMailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
@@ -88,8 +89,7 @@ class DefaultController extends AbstractPluginsAwareController
             if ($this->getParameter('user_disable_account_activation')) {
                 return $this->render('account/activate/success.html.twig');
             }
-
-            $this->get('app.mailer.account')->sendActivationLinkTo($account);
+            $this->get('app.mailer.account')->sendActivationLinkTo($account, $registration->getActivationHash());
 
             return $this->render('register/mail_delivered.html.twig');
         }

@@ -62,12 +62,12 @@ class AccountMailer
         }
     }
 
-    public function sendActivationLinkTo(Account $account)
+    public function sendActivationLinkTo(Account $account, $activationHash)
     {
             $this->sendMailTo($account, $this->Translator->trans('Please activate your RUNALYZE account'),
                 'mail/account/registration.html.twig', [
                 'username' => $account->getUsername(),
-                'activationHash' => $account->getActivationHash()
+                'activationHash' => $activationHash
             ]
         );
     }

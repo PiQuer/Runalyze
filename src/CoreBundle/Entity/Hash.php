@@ -54,6 +54,11 @@ class Hash
      */
     private $account;
 
+    public function __construct()
+    {
+        $this->setNewHash();
+    }
+
     /**
      * Get id
      *
@@ -115,8 +120,8 @@ class Hash
      */
     public function setNewHash()
     {
-        $this->setChangepwHash(self::getRandomHash(16));
-        $this->setChangepwTimelimit(time() + 86400);
+        $this->setHash(self::getRandomHash(16));
+        $this->setTimelimit(time() + 86400);
 
         return $this;
     }
