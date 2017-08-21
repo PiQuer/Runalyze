@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\DBAL\Connection;
+use Runalyze\Profile\System\AccountStatus;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -76,25 +77,10 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
     {
         return $this->createQueryBuilder('u')
             ->select('COUNT(u.id)')
-            ->where('u.activationHash is NULL')
+            ->where('u.status = :status')
+            ->setParameter('status', AccountStatus::ACTIVATED)
             ->getQuery()
             ->useResultCache($cache, 320)
-            ->getSingleScalarResult();
-    }
-
-    /**
-     * @param int $days
-     * @return array
-     */
-    public function deleteNotActivatedAccounts($days = 7)
-    {
-        $minimumAge = time() - $days * 86400;
-
-        return $this->createQueryBuilder('u')
-            ->delete()
-            ->where('u.activationHash IS NOT NULL AND u.registerdate < :minimumAge')
-            ->setParameter('minimumAge', $minimumAge)
-            ->getQuery()
             ->getSingleScalarResult();
     }
 
@@ -111,9 +97,9 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
      * @param string $deletionHash
      * @return bool true on success
      */
+    /**
     public function deleteByHash($deletionHash)
     {
-        /** @var null|Account $account */
         $account = $this->findOneBy([
             'deletionHash' => $deletionHash
         ]);
@@ -127,14 +113,16 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
 
         return false;
     }
+    */
 
     /**
      * @param string $activationHash
      * @return bool true on success
+     * @TODO
      */
+    /**
     public function activateByHash($activationHash)
     {
-        /** @var null|Account $account */
         $account = $this->findOneBy([
             'activationHash' => $activationHash
         ]);
@@ -146,7 +134,7 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
         }
 
         return false;
-    }
+    }*/
 
     public function save(Account $account)
     {

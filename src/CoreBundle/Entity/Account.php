@@ -133,34 +133,6 @@ class Account implements AdvancedUserInterface, \Serializable
     private $lastaction = null;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="changepw_hash", type="string", length=32, nullable=true, options={"fixed" = true})
-     */
-    private $changepwHash = null;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="changepw_timelimit", type="integer", nullable=true, options={"unsigned":true})
-     */
-    private $changepwTimelimit = null;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="activation_hash", type="string", length=32, nullable=true, options={"fixed" = true})
-     */
-    private $activationHash = null;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="deletion_hash", type="string", length=32, nullable=true, options={"fixed" = true})
-     */
-    private $deletionHash = null;
-
-    /**
      * @var bool
      * @Assert\Type("bool")
      * @ORM\Column(name="allow_mails", type="boolean", columnDefinition="TINYINT UNSIGNED NOT NULL DEFAULT 1")
@@ -173,6 +145,15 @@ class Account implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="allow_support", type="boolean", columnDefinition="TINYINT UNSIGNED NOT NULL DEFAULT 0")
      */
     private $allowSupport = false;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="status", type="integer", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
+     *
+     * @see \Runalyze\Profile\System\AccountStatus
+     */
+    private $status;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -510,147 +491,7 @@ class Account implements AdvancedUserInterface, \Serializable
         return $this->lastaction;
     }
 
-    /**
-     * @return $this
-     */
-    public function setNewChangePasswordHash()
-    {
-        $this->setChangepwHash(self::getRandomHash(16));
-        $this->setChangepwTimelimit(time() + 86400);
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function removeChangePasswordHash()
-    {
-        $this->setChangepwHash(null);
-        $this->setChangepwTimelimit(null);
-
-        return $this;
-    }
-
-    /**
-     * Set changepwHash
-     *
-     * @param null|string $changepwHash
-     * @return Account
-     */
-    public function setChangepwHash($changepwHash)
-    {
-        $this->changepwHash = $changepwHash;
-
-        return $this;
-    }
-
-    /**
-     * Get changepwHash
-     *
-     * @return null|string
-     */
-    public function getChangepwHash()
-    {
-        return $this->changepwHash;
-    }
-
-    /**
-     * Set changepwTimelimit
-     *
-     * @param null|int $changepwTimelimit
-     * @return Account
-     */
-    public function setChangepwTimelimit($changepwTimelimit)
-    {
-        $this->changepwTimelimit = $changepwTimelimit;
-
-        return $this;
-    }
-
-    /**
-     * Get changepwTimelimit
-     *
-     * @return null|int
-     */
-    public function getChangepwTimelimit()
-    {
-        return $this->changepwTimelimit;
-    }
-
-    /**
-     * @return $this
-     */
-    public function setNewActivationHash()
-    {
-        return $this->setActivationHash(self::getRandomHash(16));
-    }
-
-    /**
-     * @return $this
-     */
-    public function removeActivationHash()
-    {
-        $this->setActivationHash(null);
-
-        return $this;
-    }
-
-    /**
-     * Set activationHash
-     *
-     * @param string|null $activationHash
-     * @return $this
-     */
-    public function setActivationHash($activationHash)
-    {
-        $this->activationHash = $activationHash;
-
-        return $this;
-    }
-
-    /**
-     * Get activationHash
-     *
-     * @return string|null
-     */
-    public function getActivationHash()
-    {
-        return $this->activationHash;
-    }
-
-    /**
-     * @return $this
-     */
-    public function setNewDeletionHash()
-    {
-        return $this->setDeletionHash(self::getRandomHash(16));
-    }
-
-    /**
-     * Set deletionHash
-     *
-     * @param string|null $deletionHash
-     * @return $this
-     */
-    public function setDeletionHash($deletionHash)
-    {
-        $this->deletionHash = $deletionHash;
-
-        return $this;
-    }
-
-    /**
-     * Get deletionHash
-     *
-     * @return string|null
-     */
-    public function getDeletionHash()
-    {
-        return $this->deletionHash;
-    }
-
-    /**
+     /**
      * Set allowMails
      *
      * @param bool $allowMails
@@ -694,6 +535,29 @@ class Account implements AdvancedUserInterface, \Serializable
     public function getAllowSupport()
     {
         return $this->allowSupport;
+    }
+
+    /**
+     * Set status
+     *
+     * @param null|string $status
+     * @return Account
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return null|string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**
@@ -760,7 +624,7 @@ class Account implements AdvancedUserInterface, \Serializable
             $this->username,
             $this->password,
             $this->salt,
-	        $this->activationHash,
+	        $this->status,
 	        $this->language
         ));
     }
@@ -773,7 +637,7 @@ class Account implements AdvancedUserInterface, \Serializable
             $this->username,
             $this->password,
             $this->salt,
-	        $this->activationHash,
+	        $this->status,
 	        $this->language
         ) = unserialize($serialized);
     }
