@@ -42,14 +42,6 @@ class Registration
     }
 
     /**
-     * Add hash to activation_hash
-     */
-    public function requireAccountActivation()
-    {
-        $this->Account->setActivationHash(self::getNewSalt());
-    }
-
-    /**
      * @param string $timezoneName
      */
     public function setTimezoneByName($timezoneName)

@@ -46,11 +46,9 @@ class RegistrationTest extends WebTestCase
         $account->setMail('foo@bar.com');
 
         $registration = new Registration($this->EntityManager, $account);
-        $registration->requireAccountActivation();
         $registration->setPassword('Pa$$w0rd', $this->getContainer()->get('security.encoder_factory'));
         $registeredAccount = $registration->registerAccount();
 
         $this->assertEquals('foobar', $this->AccountRepository->find($registeredAccount->getId())->getUsername());
-        $this->assertNotNull($registeredAccount->getActivationHash());
     }
 }

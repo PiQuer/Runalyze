@@ -127,6 +127,15 @@ class Hash
     }
 
     /**
+     * Get hash.
+     * @param int $bytes
+     * @return string hash of length 2*$bytes
+     */
+    public static function getRandomHash($bytes = 16) {
+        return bin2hex(openssl_random_pseudo_bytes($bytes));
+    }
+
+    /**
      * Set Timelimit
      *
      * @param null|int $Timelimit
