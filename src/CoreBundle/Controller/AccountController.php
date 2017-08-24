@@ -113,10 +113,12 @@ class AccountController extends Controller
             if (null === $account) {
                 $form->get('username')->addError(new FormError($this->get('translator')->trans('The username is not known.')));
             } else {
-                $account->setNewChangePasswordHash();
+                //$account->setNewChangePasswordHash();
+                // TODO
+                // $changePasswordHash = ...
                 $this->getAccountRepository()->save($account);
 
-                $this->get('app.mailer.account')->sendRecoverPasswordLinkTo($account);
+                $this->get('app.mailer.account')->sendRecoverPasswordLinkTo($account, $changePasswordHash);
 
                 return $this->render('account/recover/mail_delivered.html.twig');
             }

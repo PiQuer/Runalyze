@@ -5,7 +5,7 @@ namespace Runalyze\Bundle\CoreBundle\Tests\Entity;
 use Doctrine\ORM\EntityManager;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
-use Runalyze\Profile\System\AccountStatus;
+use Runalyze\Profile\System\AccountStatusProfile;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -69,7 +69,7 @@ class AccountRepositoryTest extends AbstractRepositoryTestCase
             $this->EntityManager->persist($this->getNewAccount($name));
         }
 
-        $this->EntityManager->persist($this->getNewAccount('foobar')->setStatus(AccountStatus::ACTIVATED));
+        $this->EntityManager->persist($this->getNewAccount('foobar')->setStatus(AccountStatusProfile::ACTIVATED));
         $this->EntityManager->flush();
 
         $this->assertEquals($activeAccounts + 3, $this->AccountRepository->getAmountOfActivatedUsers(false));

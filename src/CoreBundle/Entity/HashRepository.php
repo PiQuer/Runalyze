@@ -2,9 +2,9 @@
 
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
-use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityRepository;
-use Runalyze\Profile\System\Hash;
+use Runalyze\Profile\System\HashProfile;
+
 class HashRepository extends EntityRepository
 {
 
@@ -20,7 +20,7 @@ class HashRepository extends EntityRepository
         return $this->createQueryBuilder('h')
             ->delete()
             ->where('h.type = :type AND h.timelimit < UNIX_TIMESTAMP()')
-            ->setParameter('type', Hash::ACTIVATION)
+            ->setParameter('type', HashProfile::ACTIVATION)
             ->getQuery()
             ->getSingleScalarResult();
     }*/

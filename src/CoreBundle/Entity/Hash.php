@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Hash
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
@@ -26,7 +26,7 @@ class Hash
      *
      * @ORM\Column(name="type", type="integer", columnDefinition="tinyint unsigned NOT NULL DEFAULT 2")
      *
-     * @see \Runalyze\Profile\System\Hash
+     * @see \Runalyze\Profile\System\HashProfile
      */
     private $type;
 
@@ -60,9 +60,7 @@ class Hash
     }
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -70,10 +68,8 @@ class Hash
     }
 
     /**
-     * Set type
-     *
      * @param null|string $type
-     * @return Hash
+     * @return $this
      */
     public function setType($type)
     {
@@ -83,20 +79,16 @@ class Hash
     }
 
     /**
-     * Get type
-     *
      * @return null|string
      */
     public function getType()
     {
         return $this->type;
     }
-    
+
     /**
-     * Set Hash
-     *
      * @param null|string $Hash
-     * @return Hash
+     * @return $this
      */
     public function setHash($Hash)
     {
@@ -127,7 +119,6 @@ class Hash
     }
 
     /**
-     * Get hash.
      * @param int $bytes
      * @return string hash of length 2*$bytes
      */
@@ -136,21 +127,17 @@ class Hash
     }
 
     /**
-     * Set Timelimit
-     *
-     * @param null|int $Timelimit
-     * @return Hash
+     * @param null|int $timelimit
+     * @return $this
      */
-    public function setTimelimit($Timelimit)
+    public function setTimelimit($timelimit)
     {
-        $this->timelimit = $Timelimit;
+        $this->timelimit = $timelimit;
 
         return $this;
     }
 
     /**
-     * Get Timelimit
-     *
      * @return null|int
      */
     public function getTimelimit()
@@ -159,13 +146,11 @@ class Hash
     }
 
     /**
-     * Set account
+     * @param null|Account $account
      *
-     * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
-     *
-     * @return Conf
+     * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account = null)
     {
         $this->account = $account;
 
@@ -173,9 +158,7 @@ class Hash
     }
 
     /**
-     * Get account
-     *
-     * @return \Runalyze\Bundle\CoreBundle\Entity\Account
+     * @return Account
      */
     public function getAccount()
     {

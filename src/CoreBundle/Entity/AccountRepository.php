@@ -3,9 +3,9 @@
 namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\DBAL\Connection;
-use Runalyze\Profile\System\AccountStatus;
-use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Doctrine\ORM\EntityRepository;
+use Runalyze\Profile\System\AccountStatusProfile;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 class AccountRepository extends EntityRepository implements UserLoaderInterface
 {
@@ -78,7 +78,7 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
         return $this->createQueryBuilder('u')
             ->select('COUNT(u.id)')
             ->where('u.status = :status')
-            ->setParameter('status', AccountStatus::ACTIVATED)
+            ->setParameter('status', AccountStatusProfile::ACTIVATED)
             ->getQuery()
             ->useResultCache($cache, 320)
             ->getSingleScalarResult();

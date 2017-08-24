@@ -52,16 +52,28 @@ class AccountMailer
         $this->Mailer->send($message);
     }
 
-    protected function customLanguageTemplates($template, $language) {
+    /**
+     * @param string $template
+     * @param string $language
+     * @return string
+     */
+    protected function customLanguageTemplates($template, $language)
+    {
         $template = str_replace('html.twig', '', $template);
+
         try {
             $this->Twig->render($template.$language.'.html.twig');
+
             return $template.$language.'.html.twig';
         } catch (\Exception $ex) {
             return $template.'html.twig';
         }
     }
 
+    /**
+     * @param Account $account
+     * @param string $activationHash
+     */
     public function sendActivationLinkTo(Account $account, $activationHash)
     {
             $this->sendMailTo($account, $this->Translator->trans('Please activate your RUNALYZE account'),
@@ -72,22 +84,30 @@ class AccountMailer
         );
     }
 
-    public function sendRecoverPasswordLinkTo(Account $account)
+    /**
+     * @param Account $account
+     * @param string $changePasswordHash
+     */
+    public function sendRecoverPasswordLinkTo(Account $account, $changePasswordHash)
     {
         $this->sendMailTo($account, $this->Translator->trans('Reset your RUNALYZE password'),
                 'mail/account/recoverPassword.html.twig', [
                 'username' => $account->getUsername(),
-                'changepw_hash' => $account->getChangepwHash()
+                'changepw_hash' => $changePasswordHash
             ]
         );
     }
 
-    public function sendDeleteLinkTo(Account $account)
+    /**
+     * @param Account $account
+     * @param string $deletionHash
+     */
+    public function sendDeleteLinkTo(Account $account, $deletionHash)
     {
         $this->sendMailTo($account, $this->Translator->trans('Deletion request of your RUNALYZE account'),
             'mail/account/deleteAccountRequest.html.twig', [
                 'username' => $account->getUsername(),
-                'deletion_hash' => $account->getDeletionHash()
+                'deletion_hash' => $deletionHash
             ]
         );
     }

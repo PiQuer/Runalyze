@@ -136,10 +136,12 @@ class SettingsController extends Controller
      */
     public function windowDeleteAction(Account $account)
     {
-        $account->setNewDeletionHash();
+        //$account->setNewDeletionHash();
+        // TODO
+        // $deletionHash = ...
         $this->getAccountRepository()->save($account);
 
-        $this->get('app.mailer.account')->sendDeleteLinkTo($account);
+        $this->get('app.mailer.account')->sendDeleteLinkTo($account, $deletionHash);
 
         return $this->render('settings/account-delete.html.twig');
     }

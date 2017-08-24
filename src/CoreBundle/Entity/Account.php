@@ -4,7 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Runalyze\Parameter\Application\Timezone;
-use Runalyze\Profile\System\AccountStatus;
+use Runalyze\Profile\System\AccountStatusProfile;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Runalyze\Model\Account\UserRole;
@@ -152,9 +152,9 @@ class Account implements AdvancedUserInterface, \Serializable
      *
      * @ORM\Column(name="status", type="integer", columnDefinition="tinyint unsigned NOT NULL DEFAULT 0")
      *
-     * @see \Runalyze\Profile\System\AccountStatus
+     * @see \Runalyze\Profile\System\AccountStatusProfile
      */
-    private $status = AccountStatus::NOT_ACTIVATED;
+    private $status = AccountStatusProfile::NOT_ACTIVATED;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -660,6 +660,6 @@ class Account implements AdvancedUserInterface, \Serializable
 
     public function isEnabled()
     {
-	    return ($this->status = AccountStatus::ACTIVATED) ? true : false;
+	    return (AccountStatusProfile::ACTIVATED == $this->status);
     }
 }

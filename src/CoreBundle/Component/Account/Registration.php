@@ -14,7 +14,7 @@ use Runalyze\Bundle\CoreBundle\Entity\Type;
 use Runalyze\Metrics\Velocity\Unit\PaceEnum;
 use Runalyze\Parameter\Application\Timezone;
 use Runalyze\Profile\Sport\SportProfile;
-use Runalyze\Profile\System\Hash as ProfileHash;
+use Runalyze\Profile\System\HashProfile;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class Registration
@@ -28,7 +28,7 @@ class Registration
     /** @var object[] */
     protected $specialVars;
 
-    /** @string Hash */
+    /** @var Hash */
     protected $activationHash;
 
     /**
@@ -248,15 +248,20 @@ class Registration
         $this->em->clear();
     }
 
-    private function setActivationHash() {
+    protected function setActivationHash()
+    {
         $hash = new Hash();
         $hash->setAccount($this->Account);
-        $hash->setType(ProfileHash::ACTIVATION);
+        $hash->setType(HashProfile::ACTIVATION);
         $this->activationHash = $hash->getHash();
         $this->em->persist($hash);
     }
 
-    public function getActivationHash() {
+    /**
+     * @return Hash
+     */
+    public function getActivationHash()
+    {
         return $this->activationHash;
     }
 
