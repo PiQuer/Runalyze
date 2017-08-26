@@ -562,6 +562,13 @@ class Account implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     *
+     */
+    public function activateAccount() {
+        $this->status = AccountStatusProfile::ACTIVATED;
+    }
+
+    /**
      * Set role
      *
      * @param string $role

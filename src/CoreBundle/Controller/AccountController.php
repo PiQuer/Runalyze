@@ -25,6 +25,15 @@ class AccountController extends Controller
     }
 
     /**
+     * @return AccountHashRepository
+     */
+    protected function getAccountHashRepository()
+    {
+        return $this->getDoctrine()->getRepository('CoreBundle:AccountHash');
+    }
+
+
+    /**
      * @Route("/delete/{hash}/confirmed", name="account_delete_confirmed", requirements={"hash": "[[:xdigit:]]{32}"})
      */
     public function deleteAccountConfirmedAction($hash, Request $request)
@@ -113,12 +122,10 @@ class AccountController extends Controller
             if (null === $account) {
                 $form->get('username')->addError(new FormError($this->get('translator')->trans('The username is not known.')));
             } else {
-                //$account->setNewChangePasswordHash();
-                // TODO
-                // $changePasswordHash = ...
+                $accountHash = $this->getAccountHashRepository()->addChangePasswordHash();
                 $this->getAccountRepository()->save($account);
 
-                $this->get('app.mailer.account')->sendRecoverPasswordLinkTo($account, $changePasswordHash);
+                $this->get('app.mailer.account')->sendRecoverPasswordLinkTo($account, $accountHash->getHash());
 
                 return $this->render('account/recover/mail_delivered.html.twig');
             }
@@ -135,7 +142,10 @@ class AccountController extends Controller
      */
     public function activateAccountAction($hash, $username = null)
     {
-        if ($this->getAccountRepository()->activateByHash($hash)) {
+        /** @var AccountHash|null $accountHash */
+        if ($accountHash = $this->getAccountHashRepository()->activateAccount($hash, $username)) {
+            $account = $accountHash->getAccount()->activateAccount();
+            $this->getAccountRepository()->save($account);
             return $this->render('account/activate/success.html.twig');
         } elseif (null !== $username && null != $this->getAccountRepository()->loadUserByUsername($username)) {
             return $this->render('account/activate/success.html.twig', ['username' => $username, 'alreadyActivated' => true]);

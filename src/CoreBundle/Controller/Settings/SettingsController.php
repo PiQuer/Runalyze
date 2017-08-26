@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller\Settings;
 
+use Runalyze\Bundle\CoreBundle\Entity\AccountHash;
 use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Dataset;
 use Runalyze\Bundle\CoreBundle\Form\Settings\ChangeMailType;
@@ -9,6 +10,7 @@ use Runalyze\Bundle\CoreBundle\Form\Settings\ChangePasswordType;
 use Runalyze\Bundle\CoreBundle\Form\Settings\DatasetCollectionType;
 use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
 use Runalyze\Dataset\DefaultConfiguration;
+use Runalyze\Profile\System\HashProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +31,14 @@ class SettingsController extends Controller
     protected function getAccountRepository()
     {
         return $this->getDoctrine()->getRepository('CoreBundle:Account');
+    }
+
+    /**
+     * @return AccountHashRepository
+     */
+    protected function getAccountHashRepository()
+    {
+        return $this->getDoctrine()->getRepository('CoreBundle:AccountHash');
     }
 
     /**
@@ -136,12 +146,9 @@ class SettingsController extends Controller
      */
     public function windowDeleteAction(Account $account)
     {
-        //$account->setNewDeletionHash();
-        // TODO
-        // $deletionHash = ...
-        $this->getAccountRepository()->save($account);
+        $hash = $this->getAccountHashRepository()->addDeletionHash($account);
 
-        $this->get('app.mailer.account')->sendDeleteLinkTo($account, $deletionHash);
+        $this->get('app.mailer.account')->sendDeleteLinkTo($account, $hash->getHash());
 
         return $this->render('settings/account-delete.html.twig');
     }

@@ -30,16 +30,24 @@ CREATE TABLE IF NOT EXISTS `runalyze_account` (
   `salt` char(64) NOT NULL DEFAULT '',
   `registerdate` int(10) unsigned DEFAULT NULL,
   `lastaction` int(10) unsigned DEFAULT NULL,
-  `changepw_hash` char(32) DEFAULT NULL,
-  `changepw_timelimit` int(10) unsigned DEFAULT NULL,
-  `activation_hash` char(32) DEFAULT NULL,
-  `deletion_hash` char(32) DEFAULT NULL,
   `allow_mails` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `allow_support` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `role` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `gender` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `birthyear` int(4) unsigned DEFAULT NULL
+  `birthyear` int(4) unsigned DEFAULT NULL,
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE runalyze_account_hash (
+  id INT UNSIGNED AUTO_INCREMENT NOT NULL,
+  account_id INT UNSIGNED NOT NULL,
+  type tinyint unsigned NOT NULL DEFAULT 2,
+  hash CHAR(32) DEFAULT NULL,
+  timelimit INT UNSIGNED DEFAULT NULL,
+  INDEX account_id (account_id),
+  PRIMARY KEY(id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
 
 --
 -- Trigger `runalyze_account`

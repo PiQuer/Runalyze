@@ -117,24 +117,35 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
 
     /**
      * @param string $activationHash
+     * @param string $username
      * @return bool true on success
      * @TODO
      */
-    /**
-    public function activateByHash($activationHash)
+    public function activateByHash($activationHash, $username = null)
     {
         $account = $this->findOneBy([
             'activationHash' => $activationHash
         ]);
 
+
         if (null !== $account) {
-            $this->save($account->removeActivationHash());
+            $this->save($account->setStatus(AccountStatusProfile::ACTIVATED));
 
             return true;
         }
 
         return false;
-    }*/
+
+    }
+
+    /**
+     * Activate account
+     */
+    public function activateAccount(Account $account) {
+        $account->setStatus(AccountStatusProfile::ACTIVATED);
+        $this->save($account);
+    }
+
 
     public function save(Account $account)
     {

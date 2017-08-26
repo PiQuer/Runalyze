@@ -5,12 +5,12 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Hash
+ * AccountHash
  *
- * @ORM\Table(name="hash", indexes={@ORM\Index(name="account_id", columns={"account_id"})})
- * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\HashRepository")
+ * @ORM\Table(name="account_hash", indexes={@ORM\Index(name="account_id", columns={"account_id"})})
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\AccountHashRepository")
  */
-class Hash
+class AccountHash
 {
     /**
      * @var int

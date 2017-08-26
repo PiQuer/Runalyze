@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Component\Account;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\AccountHash;
 use Runalyze\Bundle\CoreBundle\Entity\Conf;
 use Runalyze\Bundle\CoreBundle\Entity\Equipment;
 use Runalyze\Bundle\CoreBundle\Entity\EquipmentType;
@@ -250,11 +251,9 @@ class Registration
 
     protected function setActivationHash()
     {
-        $hash = new Hash();
-        $hash->setAccount($this->Account);
-        $hash->setType(HashProfile::ACTIVATION);
+        $hash = $this->em->getRepository('CoreBundle:AccountHash')->addActivationHash($this->Account);
+        dump($hash);
         $this->activationHash = $hash->getHash();
-        $this->em->persist($hash);
     }
 
     /**
