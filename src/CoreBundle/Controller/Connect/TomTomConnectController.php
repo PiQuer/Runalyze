@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Controller\Connect;
 
 use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\ConnectedClientMessage;
 use Runalyze\Bundle\CoreBundle\Entity\AccountClient;
+use Runalyze\Bundle\CoreBundle\Entity\AccountClientRepository;
 use Runalyze\Bundle\CoreBundle\Entity\NotificationRepository;
 use Runalyze\Sync\Provider\TomTomMySports;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Runalyze\Profile\Sync\SyncProvider;
 use Runalyze\Bundle\CoreBundle\Entity\Notification;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
 
 
 /**
@@ -29,6 +31,14 @@ class TomTomConnectController extends Controller
     protected function getNotificationRepository()
     {
         return $this->getDoctrine()->getRepository('CoreBundle:Notification');
+    }
+
+    /**
+     * @return AccountClientRepository
+     */
+    protected function getAccountClientRepository()
+    {
+        return $this->getDoctrine()->getRepository('CoreBundle:AccountClient');
     }
 
     /**
@@ -58,21 +68,33 @@ class TomTomConnectController extends Controller
             $token->getRefreshToken();
             $AccountClient->setProvider(SyncProvider::TOMTOM_MYSPORTS);
 //echo $token->getExpires();
-            $this->getNotificationRepository->save(
+            $this->getAccountClientRepository()->save($AccountClient);
+            $this->getNotificationRepository()->save(
                 Notification::createFromMessage(new ConnectedClientMessage(SyncProvider::TOMTOM_MYSPORTS, ConnectedClientMessage::STATE_SUCCESS ), $account)
             );
 
 
 
         } catch (IdentityProviderException $e) {
-            $this->getNotificationRepository->save(
+            $this->getNotificationRepository()->save(
                 Notification::createFromMessage(new ConnectedClientMessage(SyncProvider::TOMTOM_MYSPORTS, ConnectedClientMessage::STATE_FAILED), $account)
             );
         }
         return $this->redirectToRoute('dashboard');
 
 
+    }
 
+    /**
+     * @Route("/connect/tomtomMySports/test", name="connect_tomtom_mysports_test")
+     */
+    public function testAction(Request $request, Account $account)
+    {
+            $AccountClient = new AccountClient();
+            $AccountClient->setAccount($account);
+            $AccountClient->setRefreshToken('adasadada');
+            $AccountClient->setProvider(SyncProvider::TOMTOM_MYSPORTS);
+            $this->getAccountClientRepository()->save($AccountClient);
 
     }
 }

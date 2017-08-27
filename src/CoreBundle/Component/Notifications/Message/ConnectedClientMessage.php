@@ -15,13 +15,13 @@ class ConnectedClientMessage implements MessageInterface
     /** @var int connection not successfully */
     const STATE_FAILED = 1;
 
-    /** @„ar int SyncProvider */
+    /** @var int SyncProvider */
     protected $Provider;
 
     /** @var int see self::STATE_... */
     protected $State = 0;
 
-    public function __construct(SyncProvider $provider, $state = self::STATE_SUCCESS)
+    public function __construct($provider, $state = self::STATE_SUCCESS)
     {
         $this->State = (int)$state;
         $this->Provider = (int)$provider;
