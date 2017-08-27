@@ -3,6 +3,7 @@
 namespace Runalyze\Bundle\CoreBundle\Component\Notifications;
 
 use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\BackupReadyMessage;
+use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\ConnectedClientMessage;
 use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\MessageInterface;
 use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\PosterGeneratedMessage;
 use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\TemplateBasedMessage;
@@ -25,7 +26,7 @@ class MessageFactory
             case MessageTypeProfile::BACKUP_READY_MESSAGE:
                 return new BackupReadyMessage();
             case MessageTypeProfile::CONNECTED_CLIENT_MESSAGE:
-                return new PosterGeneratedMessage($notification->getData());
+                return new ConnectedClientMessage($notification->getData());
         }
 
         throw new \InvalidArgumentException('Given notification is of unknown type.');
