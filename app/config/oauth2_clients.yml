@@ -3,7 +3,7 @@ knpu_oauth2_client:
          tomtomMySports:
              type: generic
              provider_class: \League\OAuth2\Client\Provider\TomTomMySports
-             client_id: %tomtom_mysports_client_id%
-             client_secret: %tomtom_mysports_client_secret%
+             client_id: %tomtom_mysports.client_id%
+             client_secret: %tomtom_mysports.client_secret%
              redirect_route: connect_tomtom_mysports_check
-             provider_options: { apikey: %tomtom_mysports_apikey% }
+             provider_options: { apikey: %tomtom_mysports.apikey% }

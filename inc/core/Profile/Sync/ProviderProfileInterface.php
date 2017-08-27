@@ -2,7 +2,7 @@
 
 namespace Runalyze\Profile\Sync;
 
-interface ProfileInterface
+interface ProviderProfileInterface
 {
     /**
      * @return int
@@ -32,6 +32,6 @@ interface ProfileInterface
     /**
      * @return bool
      */
-    public function hasAllDayHeartrate();
+    public function hasAllDayHeartRate();
 
 }

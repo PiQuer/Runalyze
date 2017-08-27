@@ -36,6 +36,13 @@ class AccountClient
     private $refreshToken;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
+     */
+    private $enabled = true;
+
+    /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
@@ -119,13 +126,33 @@ class AccountClient
     }
 
     /**
+     * @param bool $enabled
+     *
+     * @return $this
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
      * Set account
      *
      * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
      *
      * @return $this
      */
-    public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
+    public function setAccount(Account $account = null)
     {
         $this->account = $account;
 

@@ -36,7 +36,7 @@ class ServiceController extends Controller
     {
 
         return $this->render('account/services.html.twig', [
-            'tomTomMySports' => !empty($this->getParameter('tomtom_mysports_client_id')) ? true : false,
+            'tomTomMySports' => !empty($this->getParameter('tomtom_mysports.client_id')) ? true : false,
             'connectedServices' => $this->getAccountClientRepository()->findByAccount($account)
         ]);
     }
