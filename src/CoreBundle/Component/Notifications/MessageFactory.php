@@ -24,6 +24,8 @@ class MessageFactory
                 return new PosterGeneratedMessage($notification->getData());
             case MessageTypeProfile::BACKUP_READY_MESSAGE:
                 return new BackupReadyMessage();
+            case MessageTypeProfile::CONNECTED_CLIENT_MESSAGE:
+                return new PosterGeneratedMessage($notification->getData());
         }
 
         throw new \InvalidArgumentException('Given notification is of unknown type.');
