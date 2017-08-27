@@ -27,7 +27,7 @@ interface ProfileInterface
     /**
      * @return bool
      */
-    public function hasBodyMeasures();
+    public function hasBodyData();
 
     /**
      * @return bool
