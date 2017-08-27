@@ -38,7 +38,9 @@ class AccountController extends Controller
      */
     public function deleteAccountConfirmedAction($hash, Request $request)
     {
-        if ($this->getAccountRepository()->deleteByHash($hash)) {
+        $accountHash = $this->getAccountHashRepository()->getAccountByDeletionHash($hash);
+
+        if ($this->getAccountRepository()->remove($accountHash->getAccount())) {
             $this->get('security.token_storage')->setToken(null);
             $request->getSession()->invalidate();
 
@@ -53,16 +55,16 @@ class AccountController extends Controller
      */
     public function deleteAccountAction($hash)
     {
-        /** @var Account|null $account */
-        $account = $this->getAccountRepository()->findOneBy(['deletionHash' => $hash]);
+        /** @var AccountHash|null $accountHash */
+        $accountHash = $this->getAccountHashRepository()->getAccountByDeletionHash($hash);
 
-        if (null === $account) {
-            return $this->render('account/delete/problem.html.twig');
-        }
+            if (null === $accountHash->getAccount()) {
+                return $this->render('account/delete/problem.html.twig');
+            }
 
         return $this->render('account/delete/please_confirm.html.twig', [
             'deletionHash' => $hash,
-            'username' => $account->getUsername()
+            'username' => $accountHash->getAccount()->getUsername()
         ]);
     }
 
@@ -144,8 +146,8 @@ class AccountController extends Controller
     {
         /** @var AccountHash|null $accountHash */
         if ($accountHash = $this->getAccountHashRepository()->activateAccount($hash, $username)) {
-            $account = $accountHash->getAccount()->activateAccount();
-            $this->getAccountRepository()->save($account);
+            $this->getAccountRepository()->activateAccount($accountHash->getAccount());
+            $this->getAccountHashRepository()->remove($accountHash);
             return $this->render('account/activate/success.html.twig');
         } elseif (null !== $username && null != $this->getAccountRepository()->loadUserByUsername($username)) {
             return $this->render('account/activate/success.html.twig', ['username' => $username, 'alreadyActivated' => true]);

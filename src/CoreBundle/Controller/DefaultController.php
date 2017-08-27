@@ -79,12 +79,8 @@ class DefaultController extends AbstractPluginsAwareController
             $registration->setLocale($request->getLocale());
             $registration->setTimezoneByName($formdata['textTimezone']);
 
-            if (!$this->getParameter('user_disable_account_activation')) {
-                $registration->requireAccountActivation();
-            }
-
             $registration->setPassword($account->getPlainPassword(), $this->get('security.encoder_factory'));
-            $account = $registration->registerAccount();
+            $account = $registration->registerAccount($this->getParameter('user_disable_account_activation'));
 
             if ($this->getParameter('user_disable_account_activation')) {
                 return $this->render('account/activate/success.html.twig');

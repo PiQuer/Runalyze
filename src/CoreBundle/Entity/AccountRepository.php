@@ -146,10 +146,15 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
         $this->save($account);
     }
 
-
     public function save(Account $account)
     {
         $this->_em->persist($account);
+        $this->_em->flush();
+    }
+
+    public function remove(Account $account)
+    {
+        $this->_em->remove($account);
         $this->_em->flush();
     }
 }

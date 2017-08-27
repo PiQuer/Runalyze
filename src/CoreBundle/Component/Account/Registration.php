@@ -5,10 +5,10 @@ namespace Runalyze\Bundle\CoreBundle\Component\Account;
 use Doctrine\Common\Persistence\ObjectManager;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\AccountHash;
+use Runalyze\Bundle\CoreBundle\Entity\AccountHashRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Conf;
 use Runalyze\Bundle\CoreBundle\Entity\Equipment;
 use Runalyze\Bundle\CoreBundle\Entity\EquipmentType;
-use Runalyze\Bundle\CoreBundle\Entity\Hash;
 use Runalyze\Bundle\CoreBundle\Entity\Plugin;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\Type;
@@ -249,11 +249,13 @@ class Registration
         $this->em->clear();
     }
 
-    protected function setActivationHash()
+    private function requireAccountActivation()
     {
-        $hash = $this->em->getRepository('CoreBundle:AccountHash')->addActivationHash($this->Account);
-        dump($hash);
-        $this->activationHash = $hash->getHash();
+        /** @var AccountHashRepository[] $accountHash */
+        $accountHash = $this->em->getRepository('CoreBundle:AccountHash')->addActivationHash($this->Account);
+
+        $this->activationHash = $accountHash->getHash();
+
     }
 
     /**
@@ -267,12 +269,15 @@ class Registration
     /**
      * @return Account
      */
-    public function registerAccount()
+    public function registerAccount($disableAccountActivation)
     {
         $this->em->persist($this->Account);
         $this->em->flush();
-        $this->setActivationHash();
         $this->setEmptyData();
+
+        if (!$disableAccountActivation) {
+            $this->requireAccountActivation();
+        }
 
         return $this->Account;
     }

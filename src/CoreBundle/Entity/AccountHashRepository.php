@@ -21,7 +21,6 @@ class AccountHashRepository extends EntityRepository
         $accountHash = new AccountHash();
         $accountHash->setType(HashProfile::ACTIVATION);
         $accountHash->setAccount($account);
-        $this->save($accountHash);
         return $accountHash;
     }
 
@@ -34,19 +33,33 @@ class AccountHashRepository extends EntityRepository
         return $accountHash;
     }
 
-    public function activateAccount($hash, $username = null) {
-        $hash = $this->createQueryBuilder('h')
-            ->join('h.account', 'a')
-            ->where('h.hash = :hash')
-            ->setParameter('hash', $hash)
-            ->getQuery()
-            ->getResult();
+    public function activateAccount($hash) {
+        $hash = $this->findOneBy([
+            'hash' => $hash,
+            'type' => HashProfile::ACTIVATION
+        ]);
+
+        return $hash;
+    }
+
+    public function getAccountByDeletionHash($hash) {
+        $hash = $this->findOneBy([
+            'hash' => $hash,
+            'type' => HashProfile::DELETION
+        ]);
+
         return $hash;
     }
 
     public function save(AccountHash $accountHash)
     {
         $this->_em->persist($accountHash);
+        $this->_em->flush();
+    }
+
+    public function remove(AccountHash $accountHash)
+    {
+        $this->_em->remove($accountHash);
         $this->_em->flush();
     }
 }
