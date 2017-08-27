@@ -19,7 +19,7 @@ class AccountClientRepository extends EntityRepository
 
     /**
      * @param Account $account
-     * @param string $key
+     * @param int $provider
      * @return AccountClient|null
      */
     public function findByAccountAndProvider(Account $account, $provider)

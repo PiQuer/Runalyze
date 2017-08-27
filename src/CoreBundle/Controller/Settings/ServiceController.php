@@ -21,13 +21,23 @@ class ServiceController extends Controller
     }
 
     /**
+     * @return AccountClientRepository
+     */
+    protected function getAccountClientRepository()
+    {
+        return $this->getDoctrine()->getRepository('CoreBundle:AccountClient');
+    }
+
+    /**
      * @Route("/settings/services", name="settings-services")
      * @Security("has_role('ROLE_USER')")
      */
     public function settingsAccountAction(Request $request, Account $account)
     {
+
         return $this->render('account/services.html.twig', [
-            'tomTomMySports' => !empty($this->getParameter('tomtom_mysports_client_id')) ? true : false
+            'tomTomMySports' => !empty($this->getParameter('tomtom_mysports_client_id')) ? true : false,
+            'connectedServices' => $this->getAccountClientRepository()->findByAccount($account)
         ]);
     }
 }

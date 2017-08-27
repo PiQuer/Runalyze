@@ -60,7 +60,7 @@ class AccountClient
      *
      * @param string $provider
      *
-     * @return AccountClient
+     * @return $this
      */
     public function setProvider($provider)
     {
@@ -85,7 +85,7 @@ class AccountClient
      *
      * @param string $plainToken
      *
-     * @return AccountClient
+     * @return $this
      */
     public function setPlainToken($plainToken)
     {
@@ -99,7 +99,7 @@ class AccountClient
      *
      * @param string $refreshToken
      *
-     * @return AccountClient
+     * @return $this
      */
     public function setRefreshToken($refreshToken)
     {
@@ -123,7 +123,7 @@ class AccountClient
      *
      * @param \Runalyze\Bundle\CoreBundle\Entity\Account $account
      *
-     * @return AccountClient
+     * @return $this
      */
     public function setAccount(\Runalyze\Bundle\CoreBundle\Entity\Account $account = null)
     {

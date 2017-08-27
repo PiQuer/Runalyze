@@ -4,14 +4,33 @@
 <div class="panel-heading">
     <h1>{% trans %}Services{% endtrans %}</h1>
 </div>
-    <p class="text">
-        {% trans %}Available services{% endtrans %}
-    </p>
+
+    <p>Connect different services to...</p>
+
+<div class="panel-heading panel-sub-heading">
+    <h1>{% trans %}Connected services{% endtrans %}</h1>
+</div>
+
+    {{ dump(connectedServices) }}
+    {% if connectedServices|length == 0 %}
+        No connected services
+    {% else %}
+        {% for service in connectedServices %}
+            Provider: {{ service.provider }}
+            ID: {{ service.id }}
+
+        {% endfor %}
+    {% endif %}
+
+<div class="panel-heading panel-sub-heading">
+    <h1>{% trans %}Available services{% endtrans %}</h1>
+</div>
+
     {% set availablesServies = 0 %}
     {% if tomTomMySports %}
         {% set availablesServies = availableServices + 1 %}
         <p class="">
-        <a href="#"  onclick="tomtom=window.open('{{ url('connect_tomtom_mysports') }}','MyWindow',width='350',height='350'); return false;">
+        <a href="#"  onclick="tomtom=window.open('{{ url('connect_tomtom_mysports') }}','oauthWindow',width='350',height='350'); return false;">
             <strong class="block"><img src="http://tomtomstg.prod.acquia-sites.com/sites/default/files/sports_logo_pl.jpg" width="300"></strong>
             <small class="block">
                 {% trans %}Connect your TomTom MySports account and get your activities synced to RUNALYZE{% endtrans %}

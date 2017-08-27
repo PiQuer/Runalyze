@@ -84,17 +84,4 @@ class TomTomConnectController extends Controller
 
 
     }
-
-    /**
-     * @Route("/connect/tomtomMySports/test", name="connect_tomtom_mysports_test")
-     */
-    public function testAction(Request $request, Account $account)
-    {
-            $AccountClient = new AccountClient();
-            $AccountClient->setAccount($account);
-            $AccountClient->setRefreshToken('adasadada');
-            $AccountClient->setProvider(SyncProvider::TOMTOM_MYSPORTS);
-            $this->getAccountClientRepository()->save($AccountClient);
-
-    }
 }
