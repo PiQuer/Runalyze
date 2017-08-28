@@ -16,6 +16,7 @@ class SuccessfulSyncs
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\AccountClient
      *
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\AccountClient")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="client_id", referencedColumnName="id", nullable=false)
@@ -26,6 +27,7 @@ class SuccessfulSyncs
     /**
      * @var string
      *
+     * @ORM\Id
      * @ORM\Column(name="data_type", type="smallint", length=5, nullable=false)
      */
     private $dataType;
@@ -40,6 +42,7 @@ class SuccessfulSyncs
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)

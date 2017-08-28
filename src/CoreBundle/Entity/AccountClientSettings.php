@@ -4,6 +4,7 @@ namespace Runalyze\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * AccountClient
  *
@@ -41,7 +42,7 @@ class AccountClientSettings
     /**
      * @var array
      *
-     * @ORM\Column(name="generic_data", type="json", nullable=true)
+     * @ORM\Column(name="generic_data", type="json_array", nullable=true)
      */
     private $genericData;
 

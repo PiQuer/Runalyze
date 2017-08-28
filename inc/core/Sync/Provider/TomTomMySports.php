@@ -3,6 +3,7 @@ namespace Runalyze\Sync\Provider;
 use Runalyze\Sync\Provider\ActivitySyncInterface;
 use Runalyze\Profile\Sync\SyncProvider;
 use League\OAuth2\Client\Provider;
+use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 
 class TomTomMySports implements ActivitySyncInterface {
 
@@ -24,9 +25,10 @@ class TomTomMySports implements ActivitySyncInterface {
 
     /**
      * Constructor
-     * @param Provider\TomTomMySports $client
+     * @param OAuth2Client $client
+     * @param string $refreshToken
      */
-    public function __construct(Provider\TomTomMySports $client, $refreshToken)
+    public function __construct(OAuth2Client $client, $refreshToken)
     {
         $this->client = $client;
         $this->accessToken = $refreshToken;

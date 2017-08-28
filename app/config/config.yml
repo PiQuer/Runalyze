@@ -79,7 +79,7 @@ doctrine:
         types:
             pipe_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\PipeDelimitedArray
             runalyze_pause_array: Runalyze\Bundle\CoreBundle\Doctrine\Types\RunalyzePauseArray
-
+            json_array: Doctrine\DBAL\Types\JsonArrayType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"

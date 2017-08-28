@@ -6,6 +6,7 @@ use Runalyze\Bundle\CoreBundle\Component\Notifications\Message\ConnectedClientMe
 use Runalyze\Bundle\CoreBundle\Entity\AccountClient;
 use Runalyze\Bundle\CoreBundle\Entity\AccountClientRepository;
 use Runalyze\Bundle\CoreBundle\Entity\NotificationRepository;
+use Runalyze\Profile\Sync\SyncProviderProfile;
 use Runalyze\Sync\Provider\TomTomMySports;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -57,28 +58,27 @@ class TomTomConnectController extends Controller
     public function connectCheckAction(Request $request, Account $account)
     {
         /** @var \League\OAuth2\Client\Provider\TomTomMySports $client */
-        $client = $this->get('oauth2.registry')
-            ->getClient('tomtomMySports');
+        $client = $this->get('oauth2.registry')->getClient('tomtomMySports');
 
         try {
             $token =  $client->getAccessToken();
             $AccountClient = new AccountClient();
             $AccountClient->setAccount($account);
             $AccountClient->setRefreshToken($token->getRefreshToken());
-            $AccountClient->setProvider(SyncProvider::TOMTOM_MYSPORTS);
+            $AccountClient->setProvider(SyncProviderProfile::TOMTOM_MYSPORTS);
 
             $this->getAccountClientRepository()->save($AccountClient);
-            $test = new TomTomMySports($client, $token->getRefreshToken());
+            $test = new TomTomMySports($this->get('oauth2.registry')->getClient('tomtomMySports'), $token->getRefreshToken());
             $test->fetchActivityList();
             $this->getNotificationRepository()->save(
-                Notification::createFromMessage(new ConnectedClientMessage(SyncProvider::TOMTOM_MYSPORTS, ConnectedClientMessage::STATE_SUCCESS ), $account)
+                Notification::createFromMessage(new ConnectedClientMessage(SyncProviderProfile::TOMTOM_MYSPORTS, ConnectedClientMessage::STATE_SUCCESS ), $account)
             );
 
 
 
         } catch (IdentityProviderException $e) {
             $this->getNotificationRepository()->save(
-                Notification::createFromMessage(new ConnectedClientMessage(SyncProvider::TOMTOM_MYSPORTS, ConnectedClientMessage::STATE_FAILED), $account)
+                Notification::createFromMessage(new ConnectedClientMessage(SyncProviderProfile::TOMTOM_MYSPORTS, ConnectedClientMessage::STATE_FAILED), $account)
             );
         }
         return $this->redirectToRoute('dashboard');
