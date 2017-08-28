@@ -2,18 +2,67 @@
 namespace Runalyze\Sync\Provider;
 use Runalyze\Sync\Provider\ActivitySyncInterface;
 use Runalyze\Profile\Sync\SyncProvider;
+use League\OAuth2\Client\Provider;
 
 class TomTomMySports implements ActivitySyncInterface {
+
+    /*
+     * @var Provider\TomTomMySports
+     */
+    protected $client;
+
+    /*
+     * @var string $refreshToken
+     */
+    protected $refreshToken;
+
+    /*
+     * @var string $refreshToken
+     */
+    protected $accessToken;
+
+
+    /**
+     * Constructor
+     * @param Provider\TomTomMySports $client
+     */
+    public function __construct(Provider\TomTomMySports $client, $refreshToken)
+    {
+        $this->client = $client;
+        $this->accessToken = $refreshToken;
+        $this->getAccessToken();
+    }
 
     public static function getIdentifier() {
         return SyncProvider::TOMTOM_MYSPORTS;
     }
 
-    public function fetchActivityList() {
-        //TODO
+    private function getAccessToken() {
+        $accessToken = $this->client->getAccessToken('refresh_token', [
+            'refresh_token' => $this->refreshToken
+        ]);
+        $this->accessToken = $accessToken->getToken();
+
     }
 
+    /*
+     * @link https://developer.tomtom.com/tomtom-sports-cloud/tomtom-sports-cloud-documentation/get-activity-list
+     */
+    public function fetchActivityList() {
+
+        $url = Provider\TomTomMySports::BASE_MYSPORTS_URL.'1/activity';
+        /** @var Provider\TomTomMySports */
+        $request = $this->client->getAuthenticatedRequest('GET', $url, $this->accessToken);
+        dump($request);
+
+    }
+
+    /*
+     * @link https://developer.tomtom.com/tomtom-sports-cloud/tomtom-sports-cloud-documentation/get-startstop-activity
+     */
     public function fetchActivity($identifier) {
-        //TODO
+        $url = Provider\TomTomMySports::BASE_MYSPORTS_URL.$identifier;
+        $request = $this->client->getAuthenticatedRequest('GET', $url, $this->accessToken);
+
     }
 }

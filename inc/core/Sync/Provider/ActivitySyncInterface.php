@@ -3,7 +3,7 @@
 namespace Runalyze\Sync\Provider;
 
 
-interface SyncInterface
+interface ActivitySyncInterface
 {
 
     /**
