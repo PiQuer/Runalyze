@@ -14,16 +14,7 @@ class AccountHash
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
-    /**
-     * @var int
-     *
      * @ORM\Column(name="type", type="integer", columnDefinition="tinyint unsigned NOT NULL DEFAULT 2")
      *
      * @see \Runalyze\Profile\System\HashProfile
@@ -47,6 +38,7 @@ class AccountHash
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account", cascade={"remove"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
@@ -57,14 +49,6 @@ class AccountHash
     public function __construct()
     {
         $this->setNewHash();
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

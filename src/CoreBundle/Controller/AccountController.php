@@ -73,10 +73,12 @@ class AccountController extends Controller
      */
     public function recoverForHashAction($hash, Request $request)
     {
-        /** @var Account|null $account */
-        $account = $this->getAccountRepository()->findOneBy(array('changepwHash' => $hash));
+        /** @var AccountHash|null $account */
+        $accountHash = $this->getAccountHashRepository()->getAccountByDeletionHash($hash);
+        dump($accountHash);
+        $account = $accountHash->getAccount();
 
-        if (null === $account) {
+        if (null === $accountHash) {
             return $this->render('account/recover/hash_invalid.html.twig', ['recoverHash' => $hash]);
         }
 
@@ -124,8 +126,7 @@ class AccountController extends Controller
             if (null === $account) {
                 $form->get('username')->addError(new FormError($this->get('translator')->trans('The username is not known.')));
             } else {
-                $accountHash = $this->getAccountHashRepository()->addChangePasswordHash();
-                $this->getAccountRepository()->save($account);
+                $accountHash = $this->getAccountHashRepository()->addChangePasswordHash($account);
 
                 $this->get('app.mailer.account')->sendRecoverPasswordLinkTo($account, $accountHash->getHash());
 
