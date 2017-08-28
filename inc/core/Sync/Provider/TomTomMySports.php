@@ -34,7 +34,7 @@ class TomTomMySports implements ActivitySyncInterface {
     }
 
     public static function getIdentifier() {
-        return SyncProvider::TOMTOM_MYSPORTS;
+        return SyncProviderProfile::TOMTOM_MYSPORTS;
     }
 
     private function getAccessToken() {
