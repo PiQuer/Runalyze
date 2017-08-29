@@ -97,8 +97,6 @@ class AccountHash
     public function setNewHash()
     {
         $this->setHash(self::getRandomHash(16));
-        $this->setTimelimit(time() + 86400);
-
         return $this;
     }
 

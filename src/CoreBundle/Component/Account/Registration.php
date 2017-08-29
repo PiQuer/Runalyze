@@ -252,8 +252,9 @@ class Registration
     private function requireAccountActivation()
     {
         /** @var AccountHashRepository[] $accountHash */
-        $accountHash = $this->em->getRepository('CoreBundle:AccountHash')->addActivationHash($this->Account);
-
+        $accountHash = $this->em->getRepository('CoreBundle:AccountHash')->getDefaultObject(HashProfile::ACTIVATION, $this->Account);
+        $this->em->persist($accountHash);
+        $this->em->flush();
         $this->activationHash = $accountHash->getHash();
 
     }
@@ -273,11 +274,10 @@ class Registration
     {
         $this->em->persist($this->Account);
         $this->em->flush();
-        $this->setEmptyData();
-
         if (!$disableAccountActivation) {
             $this->requireAccountActivation();
         }
+        $this->setEmptyData();
 
         return $this->Account;
     }

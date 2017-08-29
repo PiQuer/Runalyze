@@ -10,7 +10,7 @@ class HashProfile extends AbstractEnum
     const NONE = 0;
 
     /** @var int */
-    const CHANGE_PASSWORD = 1;
+    const RECOVER_PASSWORD = 1;
 
     /** @var int */
     const ACTIVATION = 2;

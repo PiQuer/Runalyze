@@ -7,28 +7,62 @@ use Runalyze\Profile\System\HashProfile;
 
 class AccountHashRepository extends EntityRepository
 {
+    public function getDefaultObject($type, Account $account) {
+        $accountHash = new AccountHash();
+        $accountHash->setType($type);
+        $accountHash->setAccount($account);
+        return $accountHash;
+    }
+
     public function addDeletionHash(Account $account)
     {
-        $accountHash = new AccountHash();
-        $accountHash->setType(HashProfile::DELETION);
-        $accountHash->setAccount($account);
+        $accountHash = $this->findOneBy([
+            'account' => $account->getId(),
+            'type' => HashProfile::DELETION
+        ]);
+        if (null === $accountHash) {
+            $accountHash = $this->getDefaultObject(HashProfile::DELETION, $account);
+        } else {
+            $accountHash->setNewHash();
+        }
+        $accountHash->setTimelimit(time() + 1209600);
+
+
         $this->save($accountHash);
         return $accountHash;
     }
 
     public function addActivationHash(Account $account)
     {
-        $accountHash = new AccountHash();
-        $accountHash->setType(HashProfile::ACTIVATION);
-        $accountHash->setAccount($account);
+        dump($account);
+        $accountHash = $this->findOneBy([
+            'account' => $account->getId(),
+            'type' => HashProfile::ACTIVATION
+        ]);
+        if (null === $accountHash) {
+            $accountHash = $this->getDefaultObject(HashProfile::ACTIVATION, $account);
+        } else {
+            $accountHash->setNewHash();
+        }
+        $accountHash->setTimelimit(time() + 1209600);
+
+        $this->save($accountHash);
         return $accountHash;
     }
 
-    public function addChangePasswordHash(Account $account)
+    public function addRecoverPasswordHash(Account $account)
     {
-        $accountHash = new AccountHash();
-        $accountHash->setType(HashProfile::CHANGE_PASSWORD);
-        $accountHash->setAccount($account);
+        $accountHash = $this->findOneBy([
+            'account' => $account->getId(),
+            'type' => HashProfile::RECOVER_PASSWORD
+        ]);
+        if (null === $accountHash) {
+            $accountHash = $this->getDefaultObject(HashProfile::RECOVER_PASSWORD, $account);
+        } else {
+            $accountHash->setNewHash();
+        }
+        $accountHash->setTimelimit(time() + 86400);
+
         $this->save($accountHash);
         return $accountHash;
     }

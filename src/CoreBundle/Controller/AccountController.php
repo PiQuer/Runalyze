@@ -126,7 +126,7 @@ class AccountController extends Controller
             if (null === $account) {
                 $form->get('username')->addError(new FormError($this->get('translator')->trans('The username is not known.')));
             } else {
-                $accountHash = $this->getAccountHashRepository()->addChangePasswordHash($account);
+                $accountHash = $this->getAccountHashRepository()->addRecoverPasswordHash($account);
 
                 $this->get('app.mailer.account')->sendRecoverPasswordLinkTo($account, $accountHash->getHash());
 
