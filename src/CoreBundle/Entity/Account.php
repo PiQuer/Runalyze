@@ -166,6 +166,13 @@ class Account implements AdvancedUserInterface, \Serializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\AccountHash", mappedBy="account", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $hashes;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
      * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\EquipmentType", mappedBy="account", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $equipmentTypes;
@@ -605,6 +612,16 @@ class Account implements AdvancedUserInterface, \Serializable
     public function getSports()
     {
         return $this->sports;
+    }
+
+    /**
+     * Get account hashes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAccountHashes()
+    {
+        return $this->hashes;
     }
 
     /**

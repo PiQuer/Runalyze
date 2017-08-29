@@ -75,12 +75,11 @@ class AccountController extends Controller
     {
         /** @var AccountHash|null $account */
         $accountHash = $this->getAccountHashRepository()->getAccountByDeletionHash($hash);
-        dump($accountHash);
-        $account = $accountHash->getAccount();
 
         if (null === $accountHash) {
             return $this->render('account/recover/hash_invalid.html.twig', ['recoverHash' => $hash]);
         }
+        $account = $accountHash->getAccount();
 
         $form = $this->createForm(RecoverPasswordType::class, $account);
         $form->handleRequest($request);

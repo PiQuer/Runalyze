@@ -36,13 +36,9 @@ class AccountHash
     private $timelimit = null;
 
     /**
-     * @var \Runalyze\Bundle\CoreBundle\Entity\Account
-     *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account", cascade={"remove"})
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="account_id", referencedColumnName="id", nullable=false)
-     * })
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account", inversedBy="hashes")
+     * @ORM\JoinColumn(name="account_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $account;
 
@@ -99,6 +95,7 @@ class AccountHash
         $this->setHash(self::getRandomHash(16));
         return $this;
     }
+
 
     /**
      * @param int $bytes
