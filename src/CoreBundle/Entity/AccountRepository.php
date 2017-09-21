@@ -93,27 +93,6 @@ class AccountRepository extends EntityRepository implements UserLoaderInterface
         return null !== $this->findOneBy($criteria);
     }
 
-    /**
-     * @param string $deletionHash
-     * @return bool true on success
-     */
-    /**
-    public function deleteByHash($deletionHash)
-    {
-        $account = $this->findOneBy([
-            'deletionHash' => $deletionHash
-        ]);
-
-        if (null !== $account) {
-            $this->_em->remove($account);
-            $this->_em->flush();
-
-            return true;
-        }
-
-        return false;
-    }
-    */
 
     /**
      * @param string $activationHash

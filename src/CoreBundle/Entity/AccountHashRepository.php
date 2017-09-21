@@ -85,6 +85,15 @@ class AccountHashRepository extends EntityRepository
         return $hash;
     }
 
+    public function getAccountByRecoverHash($hash) {
+        $hash = $this->findOneBy([
+            'hash' => $hash,
+            'type' => HashProfile::RECOVER_PASSWORD
+        ]);
+
+        return $hash;
+    }
+
     public function save(AccountHash $accountHash)
     {
         $this->_em->persist($accountHash);

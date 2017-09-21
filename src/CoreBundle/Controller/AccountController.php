@@ -74,7 +74,7 @@ class AccountController extends Controller
     public function recoverForHashAction($hash, Request $request)
     {
         /** @var AccountHash|null $account */
-        $accountHash = $this->getAccountHashRepository()->getAccountByDeletionHash($hash);
+        $accountHash = $this->getAccountHashRepository()->getAccountByRecoverHash($hash);
 
         if (null === $accountHash) {
             return $this->render('account/recover/hash_invalid.html.twig', ['recoverHash' => $hash]);
@@ -89,7 +89,6 @@ class AccountController extends Controller
 
             $account->setNewSalt();
             $account->setPassword($encoder->encodePassword($account->getPlainPassword(), $account->getSalt()));
-            $account->removeChangePasswordHash();
 
             $this->getAccountRepository()->save($account);
 

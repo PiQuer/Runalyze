@@ -37,7 +37,6 @@ class RecoverPasswordType extends AbstractType
                     new Length(array('min' => 8)),
                 ),
             ))
-            ->add('changepw_hash', HiddenType::class)
         ;
     }
 
