@@ -123,7 +123,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	protected function parseGeneralValues() {
 		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML->Id);
 
-		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
+		//$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 		$this->findSportId();
 
 		if (!empty($this->XML->Notes))

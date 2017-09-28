@@ -331,16 +331,10 @@ class Entity extends Model\EntityWithID {
 	const NOTES = 'notes';
 
 	/**
-	 * Key: creator
-	 * @var string
+	 * Key: device
+	 * @var int
 	 */
-	const CREATOR = 'creator';
-
-	/**
-	 * Key: creator details
-	 * @var string
-	 */
-	const CREATOR_DETAILS = 'creator_details';
+	const DEVICE_ID = 'device_id';
 
 	/**
 	 * Key: activity id
@@ -431,8 +425,7 @@ class Entity extends Model\EntityWithID {
 			self::TITLE,
 			self::PARTNER,
 			self::NOTES,
-			self::CREATOR,
-			self::CREATOR_DETAILS,
+			self::DEVICE_ID,
 			self::ACTIVITY_ID
 		);
 	}
@@ -514,7 +507,6 @@ class Entity extends Model\EntityWithID {
 			case self::WEATHER_SOURCE:
 			case self::IS_NIGHT:
 			case self::NOTES:
-			case self::CREATOR_DETAILS:
             case self::ROUTEID:
 			case self::ACTIVITY_ID:
 				return true;

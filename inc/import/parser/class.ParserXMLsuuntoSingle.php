@@ -131,7 +131,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 		if (!empty($this->XML->header->Energy))
 			$this->TrainingObject->setCalories( round((int)$this->XML->header->Energy/4184) );
 
-		$this->TrainingObject->setCreatorDetails( 'Suunto' );
+		//$this->TrainingObject->setCreatorDetails( 'Suunto' );
 	}
 
 	/**

@@ -57,7 +57,7 @@ class ParserSLF3Single extends ParserAbstractSingleXML {
 		$this->setTimestampAndTimezoneOffsetWithUtcFixFrom((string)$this->XML->GeneralInformation->StartDate);
 
 		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
-		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
+		//$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 	}
 
 	/**

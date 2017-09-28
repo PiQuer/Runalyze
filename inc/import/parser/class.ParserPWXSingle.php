@@ -77,7 +77,7 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 			$this->guessSportID((string)$this->XML->sportType);
 		}
 
-		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
+		//$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 
 		if (!empty($this->XML->cmt))
 			$this->TrainingObject->setTitle( (string)$this->XML->cmt );

@@ -167,15 +167,15 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Start a new activity at current point
 	 */
 	public function startNewActivity() {
-		$creator = $this->TrainingObject->getCreator();
-		$creatorDetails = $this->TrainingObject->getCreatorDetails();
+		//$creator = $this->TrainingObject->getCreator();
+		//$creatorDetails = $this->TrainingObject->getCreatorDetails();
 		$offset = $this->TrainingObject->getTimezoneOffset();
 
 		$this->TrainingObject = new TrainingObject(DataObject::$DEFAULT_ID);
 		$this->TrainingObject->setTimestamp(PHP_INT_MAX);
 		$this->TrainingObject->setTimezoneOffset($offset);
-		$this->TrainingObject->setCreator($creator);
-		$this->TrainingObject->setCreatorDetails($creatorDetails);
+		//$this->TrainingObject->setCreator($creator);
+		//$this->TrainingObject->setCreatorDetails($creatorDetails);
 
 		$this->isPaused = false;
 		$this->wasPaused = false;
@@ -342,7 +342,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 			if (isset($this->Values['software_version'])) {
 				$this->softwareVersion = $this->Values['software_version'][1];
-				$this->TrainingObject->setCreatorDetails('firmware '.$this->softwareVersion);
+				//$this->TrainingObject->setCreatorDetails('firmware '.$this->softwareVersion);
 			}
 		}
 	}
@@ -447,7 +447,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 					return;
 
 				case 39:
-					$creator = $this->TrainingObject->getCreator();
+					$creator = $this->TrainingObject->getDeviceId();
 
 					// TODO: this may need more device and firmware specific conditions
 					if (
@@ -682,7 +682,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * @see https://github.com/Runalyze/Runalyze/issues/1886
 	 */
 	protected function fixForSuunto() {
-		if ('suunto' == $this->TrainingObject->getCreator()) {
+		if ('suunto' == $this->TrainingObject->getDeviceId()) {
 			$this->TrainingObject->setTimeInSeconds($this->TrainingObject->getArrayTimeLastPoint());
 			$this->finishLaps();
 		}

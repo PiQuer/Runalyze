@@ -406,18 +406,11 @@ class Training
     private $account;
 
     /**
-     * @var string
+     * @var int|null [bpm]
      *
-     * @ORM\Column(name="creator", type="string", length=100, nullable=false, options={"default":""})
+     * @ORM\Column(name="device_id", columnDefinition="tinyint unsigned DEFAULT NULL")
      */
-    private $creator = '';
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="creator_details", type="text", length=255, nullable=true)
-     */
-    private $creatorDetails = null;
+    private $deviceId = null;
 
     /**
      * @var int|null
@@ -1561,43 +1554,23 @@ class Training
     }
 
     /**
-     * @param string $creator
+     * @param null|int $deviceId
      *
      * @return $this
      */
-    public function setCreator($creator)
+    public function setDeviceId($deviceId)
     {
-        $this->creator = $creator;
+        $this->deviceId = $deviceId;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|int
      */
-    public function getCreator()
+    public function getDeviceId()
     {
-        return $this->creator;
-    }
-
-    /**
-     * @param null|string $creatorDetails
-     *
-     * @return $this
-     */
-    public function setCreatorDetails($creatorDetails)
-    {
-        $this->creatorDetails = $creatorDetails;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getCreatorDetails()
-    {
-        return $this->creatorDetails;
+        return $this->deviceId;
     }
 
     /**

@@ -102,7 +102,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 2100, $this->object->object()->getElapsedTime(), '', 30);
 		//$this->assertEquals( 5, $this->object->object()->Sport()->id() ); // "Other" is in the file
 
-		$this->assertEquals( "Forerunner 310XT-000", $this->object->object()->getCreatorDetails() );
+		//$this->assertEquals( "Forerunner 310XT-000", $this->object->object()->getDeviceId() );
 		$this->assertEquals( "1334325060", $this->object->object()->getActivityId() );
 	}
 

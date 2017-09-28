@@ -62,7 +62,7 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 4.891, $this->object->object()->getDistance(), '', 0.1);
 
 		$this->assertEquals('Stuart', $this->object->object()->getTitle());
-		$this->assertEquals("Apple, iPhone (SERIAL_NUMBER)", $this->object->object()->getCreatorDetails());
+		$this->assertEquals(126, $this->object->object()->getDeviceId());
 
 		$this->assertTrue($this->object->object()->Splits()->areEmpty());
 	}
@@ -89,7 +89,7 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 16.049, $this->object->object()->getDistance(), '', 0.1);
 
 		$this->assertEquals('Blue Sky trail with Dan and Ian', $this->object->object()->getTitle());
-		$this->assertEquals("Garmin, Edge 205/305 (EDGE305 Software Version 3.20)", $this->object->object()->getCreatorDetails());
+		//$this->assertEquals("Garmin, Edge 205/305 (EDGE305 Software Version 3.20)", $this->object->object()->getCreatorDetails());
 
 		$this->assertEquals(4, count($this->object->object()->Splits()->asArray()));
 	}

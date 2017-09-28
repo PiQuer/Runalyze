@@ -264,7 +264,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals('2015-06-17 07:34', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
 			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
-			$this->assertEquals('fr910xt', $this->object->object()->getCreator());
+			$this->assertEquals(21, $this->object->object()->getDeviceId());
 			$this->assertEquals(2500, $this->object->object()->getPoolLength());
 			$this->assertEquals(890, $this->object->object()->getTotalStrokes());
 			$this->assertEquals(25, $this->object->object()->getCadence());
@@ -298,7 +298,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals('2015-07-18 08:29', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
 			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
-			$this->assertEquals('fenix3', $this->object->object()->getCreator());
+			$this->assertEquals(33, $this->object->object()->getDeviceId());
 			$this->assertEquals(5000, $this->object->object()->getPoolLength());
 			$this->assertEquals(1750, $this->object->object()->getTotalStrokes());
 			$this->assertEquals(32, $this->object->object()->getCadence());
@@ -342,7 +342,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 				$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 			}
 
-			$this->assertEquals('fr910xt', $this->object->object()->getCreator());
+			$this->assertEquals(21, $this->object->object()->getDeviceId());
 			$this->assertEquals(0, $this->object->object()->getPoolLength());
 			$this->assertEquals(424, $this->object->object()->getTotalStrokes());
 			$this->assertEquals(25, $this->object->object()->getCadence());
@@ -404,7 +404,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals('2015-07-29 15:23', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
 			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
-			$this->assertEquals('edge810', $this->object->object()->getCreator());
+			$this->assertEquals(30, $this->object->object()->getDeviceId());
 			$this->assertEquals(3600 + 18*60 + 9, $this->object->object()->getTimeInSeconds());
 			$this->assertEquals(39.023, $this->object->object()->getDistance());
 
@@ -535,7 +535,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertFalse( $this->object->hasMultipleTrainings() );
 			$this->assertFalse( $this->object->failed() );
-			$this->assertEquals('osynce', $this->object->object()->getCreator());
+			$this->assertEquals(120, $this->object->object()->getDeviceId());
 
 			$this->assertEquals('2015-11-04 17:06', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
 			$this->assertEquals(60, $this->object->object()->getTimezoneOffset());
@@ -652,7 +652,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			// Make sure that it's not 100, see https://github.com/Runalyze/Runalyze/issues/1798
 			$this->assertEquals(0, $this->object->object()->getFitHRVscore());
-			$this->assertEquals('fr630', $this->object->object()->getCreator());
+			$this->assertEquals(19, $this->object->object()->getDeviceId());
 			$this->assertEquals(100, $this->object->object()->getFitPerformanceCondition());
             $this->assertEquals(98, $this->object->object()->getFitPerformanceConditionEnd());
 
@@ -675,7 +675,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals('2016-06-29 17:43', LocalTime::date('Y-m-d H:i', $this->object->object()->getTimestamp()));
 			$this->assertEquals(120, $this->object->object()->getTimezoneOffset());
 
-			$this->assertEquals('suunto', $this->object->object()->getCreator());
+			$this->assertEquals(54, $this->object->object()->getDeviceId());
 
 			$this->assertEquals(4961, $this->object->object()->getTimeInSeconds(), '', 10);
 			$this->assertEquals(4961, $this->object->object()->getArrayTimeLastPoint(), '', 10);
@@ -696,7 +696,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 		if (Shell::isPerlAvailable()) {
 			$this->object->parseFile('../tests/testfiles/fit/One-second-jump-to-past.fit');
 
-			$this->assertEquals('fenix2', $this->object->object()->getCreator());
+			$this->assertEquals(32, $this->object->object()->getDeviceId());
 
 			$this->assertEquals(7115, $this->object->object()->getTimeInSeconds(), '', 10);
 			$this->assertEquals(7115, $this->object->object()->getArrayTimeLastPoint(), '', 10);
@@ -722,7 +722,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertFalse($this->object->failed());
 
-			$this->assertEquals('fenix3', $this->object->object()->getCreator());
+			$this->assertEquals(33, $this->object->object()->getDeviceId());
 
 			$this->assertEquals(1401, $this->object->object()->getTimeInSeconds(), '', 10);
 			$this->assertEquals(1401, $this->object->object()->getArrayTimeLastPoint(), '', 10);
@@ -751,7 +751,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertFalse($this->object->failed());
 
-			$this->assertEquals('fr920xt', $this->object->object()->getCreator());
+			$this->assertEquals(22, $this->object->object()->getDeviceId());
 
 			$this->assertEquals(1931, $this->object->object()->getTimeInSeconds(), '', 10);
 			$this->assertEquals(1931, $this->object->object()->getArrayTimeLastPoint(), '', 10);

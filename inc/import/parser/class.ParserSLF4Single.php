@@ -38,7 +38,7 @@ class ParserSLF4Single extends ParserSLF3Single {
 
 		$this->TrainingObject->setCalories((int)$this->XML->GeneralInformation->calories);
 		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
-		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
+		//$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 		$this->TrainingObject->setTitle((string)$this->XML->GeneralInformation->name);
 	}
 

@@ -1346,28 +1346,15 @@ class TrainingObject extends DataObject {
     public function hasArrayThb_1() { return ($this->get('arr_thb_1') != ''); }
 
 	/**
-	 * Set creator
-	 * @param string $creator
+	 * Set device id
+	 * @param string $deviceId
 	 */
-	public function setCreator($creator) { $this->set('creator', $creator); }
+	public function setDeviceId($deviceId) { $this->set('device_id', $deviceId); }
 	/**
-	 * Get creator
+	 * Get device id
 	 * @return string
 	 */
-	public function getCreator() { return $this->get('creator'); }
-
-
-	/**
-	 * Set creator details
-	 * @param string $details
-	 */
-	public function setCreatorDetails($details) { $this->set('creator_details', $details); }
-	/**
-	 * Get creator details
-	 * @return string
-	 */
-	public function getCreatorDetails() { return $this->get('creator_details'); }
-
+	public function getDeviceId() { return $this->get('device_id'); }
 
 	/**
 	 * Set activity id
