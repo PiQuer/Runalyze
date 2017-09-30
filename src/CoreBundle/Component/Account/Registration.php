@@ -270,7 +270,7 @@ class Registration
     /**
      * @return Account
      */
-    public function registerAccount($disableAccountActivation)
+    public function registerAccount($disableAccountActivation = false)
     {
         $this->em->persist($this->Account);
         $this->em->flush();
