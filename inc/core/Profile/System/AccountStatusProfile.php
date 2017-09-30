@@ -2,7 +2,7 @@
 
 namespace Runalyze\Profile\System;
 
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 class AccountStatusProfile extends AbstractEnum
 {
