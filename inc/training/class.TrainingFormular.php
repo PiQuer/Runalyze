@@ -91,10 +91,11 @@ class TrainingFormular extends StandardFormular {
 	protected function prepareForDisplayInSublcass() {
 		parent::prepareForDisplayInSublcass();
 
-		$this->initRaceResultFieldset();
+        $this->addAdditionalHiddenFields();
+        $this->adjustWeatherFieldset();
 
+		$this->initRaceResultFieldset();
         $this->initTagFieldset();
-		$this->addAdditionalHiddenFields();
 		$this->initEquipmentFieldset();
 
 		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
@@ -255,7 +256,40 @@ class TrainingFormular extends StandardFormular {
 	 */
 	protected function addOldObjectData() {
 		$this->addHiddenValue('old-data', base64_encode(serialize($this->dataObject->getArray())));
+		$this->addHiddenValue('start-coordinates', $this->getStartCoordinatesAsString());
 	}
+
+	protected function getStartCoordinatesAsString() {
+	    $startpoint = $this->dataObject->get('startpoint');
+
+	    if ($startpoint instanceof \League\Geotools\Coordinate\CoordinateInterface) {
+	        return $startpoint->getLatitude().','.$startpoint->getLongitude();
+        }
+
+        return '';
+    }
+
+	protected function adjustWeatherFieldset() {
+        foreach ($this->fieldsets as $fieldset) {
+            if ('fieldset-weather' == $fieldset->getId()) {
+                $canLoadWeather = strlen(DARKSKY_API_KEY) || strlen(OPENWEATHERMAP_API_KEY);
+                $fieldset->setHtmlCodeBeforeFields(
+                    '<div class="margin-bottom only-outside inline-span-menu">'.
+                    ($canLoadWeather ? '<span class="inline-span-menu-item link weatherdata-button-load">'.__('Load weather data').'</span> ' : '').
+                    '<span class="inline-span-menu-item link weatherdata-button-edit hide">'.__('Add weather data').'</span> '.
+                    '<span class="inline-span-menu-item link weatherdata-button-remove">'.__('Remove all weather data').'</span> '.
+                    '</div>'.
+                    '<div class="margin-bottom only-outside weatherdata-none-text hide">'.
+                    '<p><em>'.__('No weather data present.').'</em></p>'.
+                    '</div>'.
+                    '<div class="margin-bottom only-outside weatherdata-loading-text hide">'.
+                    '<p><em class="loading-ellipsis">'.__('Requesting weather data').' </em></p>'.
+                    '</div>'
+                );
+                $fieldset->setHtmlCode('<p class="weatherdata-source only-outside small r'.($this->dataObject->Weather()->sourceIsKnown() ? '' : ' hide').'">via '.$this->dataObject->Weather()->sourceAsString().'</p>');
+            }
+        }
+    }
 
 	/**
 	 * Add fieldset to (un)set the activity as official race
@@ -336,22 +370,28 @@ class TrainingFormular extends StandardFormular {
 	/**
 	 * Display fieldset: Tag
 	 */
-	protected function initTagFieldset() {
-		$isCreateForm = ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE);
-		$Factory = new Factory(SessionAccountHandler::getId());
-		$CurrentTags = $isCreateForm ? array() : $Factory->tagForActivity($this->dataObject->id(), true);
-		$Fieldset = new FormularFieldset( __('Tags') );
-		$Fieldset->addField(new FormularInputHidden('tag_old', '', implode(',', $CurrentTags)));
+	protected function initTagFieldset()
+    {
+        $isCreateForm = ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE);
+        $Factory = new Factory(SessionAccountHandler::getId());
+        $CurrentTags = $isCreateForm ? array() : $Factory->tagForActivity($this->dataObject->id(), true);
+        $Fieldset = new FormularFieldset(__('Tags'));
+        $Fieldset->addField(new FormularInputHidden('tag_old', '', implode(',', $CurrentTags)));
 
-		if (isset($_POST['tags'])) {
-			$CurrentTags = self::readTagFromPost();
+        if (isset($_POST['tags'])) {
+            $CurrentTags = self::readTagFromPost();
+        }
+
+        $Field = new FormularSelectBox('tags', 'Tags', $CurrentTags);
+
+        foreach ($Factory->allTags() as $tag) {
+            $tags[$tag->id()] = $tag->tag();
 		}
-
-		$Field = new FormularSelectBox('tags', 'Tags', $CurrentTags);
-
-		foreach ($Factory->allTags() as $tag) {
-			$Field->addOption($tag->id(), $tag->tag());
+		if (is_array($tags)) {
+            natcasesort($tags);
 		}
+        $Field->setOptions($tags);
+
 
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
 		$Field->addCSSclass('chosen-select-create full-size');

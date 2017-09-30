@@ -25,6 +25,9 @@ class JsonImporter
 	/** @var array */
 	protected $ExistingData = array();
 
+    /** @var array */
+    protected $InternalSportIds = array();
+
 	/** @var JsonImporterResults */
 	protected $Results;
 
@@ -130,10 +133,17 @@ class JsonImporter
 
 		foreach ($Tables as $Table => $Column) {
 			$this->ExistingData['runalyze_'.$Table] = array();
-			$statement = $this->DB->query('SELECT `id`,`'.$Column.'` FROM `'.$this->DatabasePrefix.$Table.'`');
+			if ($Table == 'sport') {
+                $statement = $this->DB->query('SELECT `id`, `internal_sport_id`, `' . $Column . '` FROM `' . $this->DatabasePrefix . $Table . '`');
+            } else {
+                $statement = $this->DB->query('SELECT `id`,`' . $Column . '` FROM `' . $this->DatabasePrefix . $Table . '`');
+            }
 
 			while ($row = $statement->fetch()) {
 				$this->ExistingData['runalyze_'.$Table][$row[$Column]] = $row['id'];
+				if ($Table == 'sport' && !empty($row['internal_sport_id'])) {
+				    $this->InternalSportIds[$row['internal_sport_id']] = $row['id'];
+                }
 			}
 		}
 
@@ -317,17 +327,24 @@ class JsonImporter
 			$id = key($completeRow);
 			$row = current($completeRow);
 			$values = array_values($row);
-
+			$columnIds = array_flip($columns);
 			if (in_array($tableName, array(
 				'runalyze_equipment',
 				'runalyze_equipment_type',
 				'runalyze_plugin',
 				'runalyze_route',
-				'runalyze_sport',
-				'runalyze_type',
+                'runalyze_type',
+                'runalyze_sport',
 				'runalyze_tag'
 			))) {
-				if (isset($this->ExistingData[$tableName][$values[0]])) {
+			    if ($tableName == 'runalyze_sport' && isset($columnIds['internal_sport_id'])) {
+			        $internalId = $values[$columnIds['internal_sport_id']];
+			        if ( isset($this->InternalSportIds[$internalId])) {
+                        $this->ReplaceIDs[$tableName][$id] = $this->InternalSportIds[$internalId];
+                        break;
+                    }
+                }
+                if (isset($this->ExistingData[$tableName][$values[0]])) {
 					$this->ReplaceIDs[$tableName][$id] = $this->ExistingData[$tableName][$values[0]];
 				} else {
 					$this->correctValues($tableName, $row);
@@ -335,7 +352,7 @@ class JsonImporter
 					$this->ReplaceIDs[$tableName][$id] = $bulkInserter->insert(array_values($row));
 					$this->Results->addInserts($tableName, 1);
 				}
-			} elseif (
+            } elseif (
 				$tableName == 'runalyze_equipment_sport' &&
 				$this->equipmentSportRelationDoesExist($row['sportid'], $row['equipment_typeid'])
 			) {
@@ -354,6 +371,7 @@ class JsonImporter
 
 			$line = $this->Reader->readLine();
 		}
+
 	}
 
 	/**
@@ -385,7 +403,15 @@ class JsonImporter
 	private function correctValues($tableName, array &$row)
     {
 		if ($tableName == 'runalyze_training') {
-			$this->correctActivity($row);
+            $this->correctActivity($row);
+        } elseif ($tableName == 'runalyze_sport') {
+		    if (isset($row['default_typeid'])) {
+                $row['default_typeid'] = null;
+            }
+
+            if (isset($row['main_equipmenttypeid'])) {
+                $row['main_equipmenttypeid'] = null;
+            }
 		} elseif ($tableName == 'runalyze_plugin_conf') {
 			$row['pluginid'] = $this->correctID('runalyze_plugin', $row['pluginid']);
 		} elseif ($tableName == 'runalyze_trackdata') {
