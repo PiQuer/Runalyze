@@ -91,6 +91,7 @@ class AccountController extends Controller
             $account->setPassword($encoder->encodePassword($account->getPlainPassword(), $account->getSalt()));
 
             $this->getAccountRepository()->save($account);
+            $this->getAccountHashRepository()->remove($accountHash);
 
             return $this->render('account/recover/success.html.twig');
         }
@@ -147,6 +148,7 @@ class AccountController extends Controller
         if ($accountHash = $this->getAccountHashRepository()->activateAccount($hash, $username)) {
             $this->getAccountRepository()->activateAccount($accountHash->getAccount());
             $this->getAccountHashRepository()->remove($accountHash);
+            dump('test');
             return $this->render('account/activate/success.html.twig');
         } elseif (null !== $username && null != $this->getAccountRepository()->loadUserByUsername($username)) {
             return $this->render('account/activate/success.html.twig', ['username' => $username, 'alreadyActivated' => true]);

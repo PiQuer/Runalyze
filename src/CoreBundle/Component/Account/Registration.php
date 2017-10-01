@@ -251,8 +251,8 @@ class Registration
 
     private function requireAccountActivation()
     {
-        /** @var AccountHashRepository[] $accountHash */
-        $accountHash = $this->em->getRepository('CoreBundle:AccountHash')->getDefaultObject(HashProfile::ACTIVATION, $this->Account);
+        /** @var AccountHash[] $accountHash */
+        $accountHash = $this->em->getRepository('CoreBundle:AccountHash')->addActivationHash($this->Account);
         $this->em->persist($accountHash);
         $this->em->flush();
         $this->activationHash = $accountHash->getHash();

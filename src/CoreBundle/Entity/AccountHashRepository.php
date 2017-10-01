@@ -46,7 +46,6 @@ class AccountHashRepository extends EntityRepository
         }
         $accountHash->setTimelimit(time() + 1209600);
 
-        $this->save($accountHash);
         return $accountHash;
     }
 
