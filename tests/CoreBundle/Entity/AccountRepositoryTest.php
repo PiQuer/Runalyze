@@ -70,7 +70,7 @@ class AccountRepositoryTest extends AbstractRepositoryTestCase
             $this->EntityManager->persist($this->getNewAccount($name));
         }
 
-        $this->EntityManager->persist($this->getNewAccount('foobar')->setStatus(AccountStatusProfile::DISABLEDs));
+        $this->EntityManager->persist($this->getNewAccount('foobar')->setStatus(AccountStatusProfile::DISABLED));
         $this->EntityManager->flush();
 
         $this->assertEquals($activeAccounts + 3, $this->AccountRepository->getAmountOfActivatedUsers(false));
