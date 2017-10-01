@@ -40,7 +40,8 @@ class AccountRepositoryTest extends AbstractRepositoryTestCase
         return (new Account())
             ->setUsername($username)
             ->setMail($mail)
-            ->setPassword('');
+            ->setPassword('')
+            ->setStatus(AccountStatusProfile::ACTIVATED);
     }
 
     public function testLoadingUnknownUser()
@@ -69,7 +70,7 @@ class AccountRepositoryTest extends AbstractRepositoryTestCase
             $this->EntityManager->persist($this->getNewAccount($name));
         }
 
-        $this->EntityManager->persist($this->getNewAccount('foobar')->setStatus(AccountStatusProfile::ACTIVATED));
+        $this->EntityManager->persist($this->getNewAccount('foobar')->setStatus(AccountStatusProfile::DISABLEDs));
         $this->EntityManager->flush();
 
         $this->assertEquals($activeAccounts + 3, $this->AccountRepository->getAmountOfActivatedUsers(false));
