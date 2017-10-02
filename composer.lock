@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "453eca9a59289d9e50cf7ee037270b8d",
+    "content-hash": "d8bad1e9d2c7b1c4ac7149cbf873e442",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -341,16 +341,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "30e07cf03edc3cd3ef579d0dd4dd8c58250799a5"
+                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/30e07cf03edc3cd3ef579d0dd4dd8c58250799a5",
-                "reference": "30e07cf03edc3cd3ef579d0dd4dd8c58250799a5",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/54cacc9b81758b14e3ce750f205a393d52339e97",
+                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97",
                 "shasum": ""
             },
             "require": {
@@ -359,7 +359,7 @@
             },
             "require-dev": {
                 "doctrine/cache": "1.*",
-                "phpunit/phpunit": "^5.6.1"
+                "phpunit/phpunit": "^5.7"
             },
             "type": "library",
             "extra": {
@@ -405,7 +405,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2016-10-24T11:45:47+00:00"
+            "time": "2017-02-24T16:22:25+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1665,16 +1665,16 @@
         },
         {
             "name": "knpuniversity/oauth2-client-bundle",
-            "version": "1.10.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knpuniversity/oauth2-client-bundle.git",
-                "reference": "22963a96f354c8d2160939581c1c4d3060b7a3a4"
+                "reference": "4eace79028a89aeeeea2bfa454aa628619ad61bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/knpuniversity/oauth2-client-bundle/zipball/22963a96f354c8d2160939581c1c4d3060b7a3a4",
-                "reference": "22963a96f354c8d2160939581c1c4d3060b7a3a4",
+                "url": "https://api.github.com/repos/knpuniversity/oauth2-client-bundle/zipball/4eace79028a89aeeeea2bfa454aa628619ad61bf",
+                "reference": "4eace79028a89aeeeea2bfa454aa628619ad61bf",
                 "shasum": ""
             },
             "require": {
@@ -1715,7 +1715,7 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2017-06-12T19:55:35+00:00"
+            "time": "2017-09-27T17:08:07+00:00"
         },
         {
             "name": "league/geotools",

@@ -31,9 +31,10 @@
         "runalyze/glossary": "dev-master",
         "snc/redis-bundle": "2.*",
         "predis/predis": "^1.0",
-        "knpuniversity/oauth2-client-bundle": "^1.10",
+        "knpuniversity/oauth2-client-bundle": "^1.12",
         "runalyze/oauth2-tomtom-mysports": "dev-master",
-        "defuse/php-encryption": "^2.1"
+        "defuse/php-encryption": "^2.1",
+        "doctrine/annotations": "1.4.*"
     },
     "autoload": {
         "files": ["src/functions.php", "app/AppKernel.php"],
