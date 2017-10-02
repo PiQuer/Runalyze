@@ -52,14 +52,6 @@ services:
     arguments: ["@mailer", "@twig", "@translator"]
     calls:
       - [setFrom, ["%mail_sender%", "%mail_name%"]]
-  app.repository.account_client:
-    class: Runalyze\Bundle\CoreBundle\Entity\AccountClientRepository
-    factory: ["@doctrine.orm.entity_manager", getRepository]
-    arguments: [Runalyze\Bundle\CoreBundle\Entity\AccountClient]
-  app.repository.account_client_settings:
-    class: Runalyze\Bundle\CoreBundle\Entity\AccountClientSettingsRepository
-    factory: ["@doctrine.orm.entity_manager", getRepository]
-    arguments: [Runalyze\Bundle\CoreBundle\Entity\AccountClientSettings]
   app.repository.account:
     class: Runalyze\Bundle\CoreBundle\Entity\AccountRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -242,7 +234,7 @@ services:
   app.poster.filehandler:
     class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\FileHandler
     arguments: ["%kernel.root_dir%"]
-  app.sync_provider.tomtommysports:
+  app.sync_provider.tomtomMySports:
     class: Runalyze\Sync\Provider\TomTomMySports
     arguments: ["@app.repository.account_client", "@app.repository.account_client_settings"]
   app.bernard.backup_receiver:
