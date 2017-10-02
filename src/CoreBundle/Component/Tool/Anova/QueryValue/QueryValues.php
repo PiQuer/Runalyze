@@ -2,8 +2,8 @@
 
 namespace Runalyze\Bundle\CoreBundle\Component\Tool\Anova\QueryValue;
 
-use Runalyze\Util\AbstractEnum;
-use Runalyze\Util\AbstractEnumFactoryTrait;
+use Runalyze\Common\Enum\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnumFactoryTrait;
 
 final class QueryValues extends AbstractEnum
 {
@@ -56,6 +56,12 @@ final class QueryValues extends AbstractEnum
 
     /** @var string */
     const VERTICAL_OSCILLATION = 'vertical_oscillation';
+
+    /** @var string */
+    const FLIGHT_TIME = 'flight_time';
+
+    /** @var string */
+    const FLIGHT_RATIO = 'flight_ratio';
 
     /** @var string */
     const FIT_HRV_ANALYSIS = 'fit_hrv_analysis';
