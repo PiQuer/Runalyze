@@ -157,7 +157,8 @@ class SearchResults {
 			'route',
 			'title',
 			'partner',
-			'notes'
+			'notes',
+            'created'
 		);
 	}
 
@@ -310,6 +311,10 @@ class SearchResults {
 		if (isset($_POST['date-from']) && isset($_POST['date-to'])) {
 			$this->addTimeRangeCondition($conditions);
 		}
+
+        if (isset($_POST['created-date-from']) && isset($_POST['created-date-to'])) {
+            $this->addCreatedRangeCondition($conditions);
+        }
 
 		if (isset($_POST['pace']) && $_POST['pace'] != '') {
 			$this->addPaceCondition($conditions);
@@ -481,6 +486,20 @@ class SearchResults {
 			$conditions[] = '`t`.`time` BETWEEN '.LocalTime::fromServerTime($_POST['date-from'])->getTimestamp().' AND '.(LocalTime::fromServerTime($_POST['date-to'])->getTimestamp()+DAY_IN_S);
 		}
 	}
+
+    /**
+     * Add time range condition
+     * @param array $conditions
+     */
+    protected function addCreatedRangeCondition(array &$conditions) {
+        if (
+            FormularValueParser::validatePost('created-date-from', FormularValueParser::$PARSER_DATE) &&
+            FormularValueParser::validatePost('created-date-to', FormularValueParser::$PARSER_DATE) &&
+            $_POST['created-date-to'] > 0
+        ) {
+            $conditions[] = '`t`.`created` BETWEEN '.LocalTime::fromServerTime($_POST['created-date-from'])->getTimestamp().' AND '.(LocalTime::fromServerTime($_POST['created-date-to'])->getTimestamp()+DAY_IN_S);
+        }
+    }
 
 	/**
 	 * Add sport condition

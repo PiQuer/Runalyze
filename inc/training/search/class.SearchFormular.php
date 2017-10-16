@@ -33,9 +33,10 @@ class SearchFormular extends Formular {
 		$this->setDefaultValues();
 		$this->initGeneralFieldset();
 		$this->initConditions();
-		$this->addFieldSendToMultiEditor();
-		$this->addResultsPerPageField();
-		$this->addSubmitBlock();
+        $this->addFieldCreatedRange();
+        $this->addResultsPerPageField();
+        $this->addFieldSendToMultiEditor();
+        $this->addSubmitBlock();
 		$this->addPager();
 		$this->addFieldset($this->Fieldset);
 
@@ -92,6 +93,14 @@ class SearchFormular extends Formular {
 		$this->Fieldset->addField( $Field );
 	}
 
+    /**
+     * Add field: time range
+     */
+    private function addFieldCreatedRange() {
+        $Field = new FormularInputSearchCreatedRange('search_created_range', __('Upload date'));
+        $this->Fieldset->addField( $Field );
+    }
+
 	/**
 	 * Add field: sort
 	 */
@@ -125,7 +134,7 @@ class SearchFormular extends Formular {
             50 => 50,
             100 => 100,
             200 => 200]);
-        $Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W33 );
+        $Field->setLayout( 'full-size left' );
 
         $this->Fieldset->addField($Field);
     }
