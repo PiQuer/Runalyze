@@ -33,6 +33,8 @@
         "predis/predis": "^1.0",
         "runalyze/common": "dev-master",
         "runalyze/devices": "dev-master",
+        "miniflux/picofeed": "@stable",
+        "runalyze/devices": "dev-master",
         "runalyze/oauth2-tomtom-mysports": "dev-master",
         "defuse/php-encryption": "^2.1",
         "knpuniversity/oauth2-client-bundle": "^1.12"
