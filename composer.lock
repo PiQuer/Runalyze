@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "de035047ef413dbc55278860a2dfe210",
+    "content-hash": "a23aee5e9f710d8318cdf5497434b4bb",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -4141,6 +4141,51 @@
                 "zf2"
             ],
             "time": "2016-02-18T20:53:00+00:00"
+        },
+        {
+            "name": "zendframework/zendxml",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/ZendXml.git",
+                "reference": "7b64507bc35d841c9c5802d67f6f87ef8e1a58c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/ZendXml/zipball/7b64507bc35d841c9c5802d67f6f87ef8e1a58c9",
+                "reference": "7b64507bc35d841c9c5802d67f6f87ef8e1a58c9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.3 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^3.7 || ^4.0",
+                "squizlabs/php_codesniffer": "^1.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "ZendXml\\": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Utility library for XML usage, best practices, and security in PHP",
+            "homepage": "http://packages.zendframework.com/",
+            "keywords": [
+                "security",
+                "xml",
+                "zf2"
+            ],
+            "time": "2016-02-04T21:02:08+00:00"
         }
     ],
     "packages-dev": [
@@ -4951,7 +4996,7 @@
                 "runalyze",
                 "symfony3"
             ],
-            "time": "2017-08-18T17:00:54+00:00"
+            "time": "2017-08-18 17:00:54"
         },
         {
             "name": "sebastian/comparator",
@@ -5383,9 +5428,9 @@
         "jms/translation-bundle": 20,
         "runalyze/glossary": 20,
         "runalyze/common": 20,
+        "miniflux/picofeed": 0,
         "runalyze/devices": 20,
         "runalyze/oauth2-tomtom-mysports": 20,
-        "miniflux/picofeed": 0,
         "runalyze/playground": 20
     },
     "prefer-stable": true,
