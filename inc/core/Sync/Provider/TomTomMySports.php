@@ -48,7 +48,8 @@ class TomTomMySports implements ActivitySyncInterface {
         return SyncProviderProfile::TOMTOM_MYSPORTS;
     }
 
-    private function getAccessToken() {
+    private function getAccessToken()
+    {
         if (empty($accessToken)) {
             $accessToken = $this->client->getAccessToken('refresh_token', [
                 'refresh_token' => $this->refreshToken
@@ -61,7 +62,8 @@ class TomTomMySports implements ActivitySyncInterface {
     /*
      * @link https://developer.tomtom.com/tomtom-sports-cloud/tomtom-sports-cloud-documentation/get-activity-list
      */
-    public function fetchActivityList() {
+    public function fetchActivityList()
+    {
         $this->getAccessToken();
 
         $url = Provider\TomTomMySports::BASE_MYSPORTS_URL.'1/activity';
@@ -71,12 +73,31 @@ class TomTomMySports implements ActivitySyncInterface {
 
     }
 
+    /**
+     * @param array $activityListArray
+     */
+    private function processActivityList($activityListArray)
+    {
+        foreach($activityListArray as $activity) {
+            // Check if activity is already synced
+            // If not queueActivity with needed identifier
+        }
+
+    }
+
     /*
      * @link https://developer.tomtom.com/tomtom-sports-cloud/tomtom-sports-cloud-documentation/get-startstop-activity
      */
-    public function fetchActivity($identifier) {
+    public function fetchActivity($identifier)
+    {
         $url = Provider\TomTomMySports::BASE_MYSPORTS_URL.$identifier;
         $request = $this->client->getAuthenticatedRequest('GET', $url, $this->accessToken);
 
+    }
+
+    private function processActivity()
+    {
+        //Do what is needed to import that activity->
+        //Call Parser/Importers
     }
 }

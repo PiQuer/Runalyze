@@ -25,12 +25,13 @@ class AccountClientSettings
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\AccountClient
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\AccountClient")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\AccountClient", inversedBy="settings")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="client_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $client;
+
 
     /**
      * @var string

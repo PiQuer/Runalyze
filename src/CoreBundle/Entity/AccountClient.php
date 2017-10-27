@@ -53,6 +53,13 @@ class AccountClient
     private $account;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\AccountClientSettings", mappedBy="client", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $settings;
+
+    /**
      * Get id
      *
      * @return integer
@@ -167,5 +174,13 @@ class AccountClient
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSettings()
+    {
+        return $this->settings;
     }
 }
