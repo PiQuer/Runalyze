@@ -55,6 +55,13 @@ class AccountClientSettings
     private $startDate;
 
     /**
+     * @var int [timestamp]
+     *
+     * @ORM\Column(name="last_snyc", type="integer", precision=11, nullable=true)
+     */
+    private $lastSync;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean", columnDefinition="tinyint unsigned NOT NULL DEFAULT 1")
@@ -163,6 +170,26 @@ class AccountClientSettings
     public function getStartDate()
     {
         return $this->startDate;
+    }
+
+    /**
+     * @param int $lastSync [timestamp]
+     *
+     * @return $this
+     */
+    public function setLastSync($lastSync)
+    {
+        $this->lastSync = $lastSync;
+
+        return $this;
+    }
+
+    /**
+     * @return int [timestamp]
+     */
+    public function getLastSync()
+    {
+        return $this->lastSync;
     }
 
     /**
