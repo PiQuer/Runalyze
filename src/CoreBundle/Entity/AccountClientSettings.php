@@ -57,7 +57,7 @@ class AccountClientSettings
     /**
      * @var int [timestamp]
      *
-     * @ORM\Column(name="last_snyc", type="integer", precision=11, nullable=true)
+     * @ORM\Column(name="last_sync", type="integer", precision=11, nullable=true)
      */
     private $lastSync;
 

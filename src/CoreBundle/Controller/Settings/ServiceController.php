@@ -76,4 +76,17 @@ class ServiceController extends Controller
             'id' => $setting->getId()
         ]);
     }
+
+    /**
+     * @Route("/settings/test", name="settings-services")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function servicesTestAction(Request $request, Account $account)
+    {
+
+        return $this->render('settings/services/services.html.twig', [
+            'tomTomMySports' => !empty($this->getParameter('tomtom_mysports.client_id')) ? true : false,
+            'connectedServices' => $this->getAccountClientRepository()->findByAccount($account)
+        ]);
+    }
 }
