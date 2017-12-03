@@ -1,6 +1,6 @@
 <?php
 namespace Runalyze\Profile\Sync;
-use Runalyze\Util\AbstractEnum;
+use Runalyze\Common\Enum\AbstractEnum;
 
 class SyncDataTypeProfile extends AbstractEnum
 {

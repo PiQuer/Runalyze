@@ -72,6 +72,7 @@ class TomTomConnectController extends Controller
             $this->getNotificationRepository()->save(
                 Notification::createFromMessage(new ConnectedClientMessage(SyncProviderProfile::TOMTOM_MYSPORTS, ConnectedClientMessage::STATE_SUCCESS ), $account)
             );
+          exit;
 
         } catch (IdentityProviderException $e) {
             $this->getNotificationRepository()->save(

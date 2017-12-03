@@ -38,6 +38,13 @@ class SuccessfulSyncs
      * @ORM\Column(name="data_identifier", type="string", length=100, nullable=true)
      */
     private $dataIdentifier;
+  
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="data_related_id", type="integer", nullable=true, options={"unsigned":true})
+     */
+    private $dataRelated;
 
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
@@ -112,6 +119,26 @@ class SuccessfulSyncs
     public function getDataIdentifier()
     {
         return $this->dataIdentifier;
+    }
+  
+      /**
+     * @param int $dataRelated
+     *
+     * @return $this
+     */
+    public function setDataRelated($dataRelated)
+    {
+        $this->dataRelated = $dataRelated;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDataRelated()
+    {
+        return $this->dataRelated;
     }
 
     /**
