@@ -14,7 +14,8 @@ class QueueConsumeCommand extends ContainerAwareCommand
     /** @var array Array of all available queues has to be maintained manually */
     protected $InternalQueues = [
         'user-backup',
-        'poster-generator'
+        'poster-generator',
+        'activity-import'
     ];
 
     /** @var array */

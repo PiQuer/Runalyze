@@ -95,6 +95,10 @@ services:
     class: Runalyze\Bundle\CoreBundle\Entity\SportRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\Sport]
+  app.repository.tag:
+    class: Runalyze\Bundle\CoreBundle\Entity\TagRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [Runalyze\Bundle\CoreBundle\Entity\Tag]
   app.repository.type:
     class: Runalyze\Bundle\CoreBundle\Entity\TypeRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -330,6 +334,11 @@ services:
     arguments: ["@monolog.logger.queue", "@app.repository.account", "@app.repository.sport", "@app.repository.notification", "@app.poster.generate_json", "@app.poster.generate_poster", "@app.poster.filehandler", "@app.mailer.account", "%data_directory%", "%rsvg_path%", "%inkscape_path%"]
     tags:
       - { name: bernard.receiver, message: posterGenerator }
+  app.bernard.activity_receiver:
+    class: Runalyze\Bundle\CoreBundle\Queue\Receiver\ActivityReceiver
+    arguments: ["@app.file_importer","@monolog.logger.queue", "@app.configuration_manager", "@app.activity_context_adapter_factory", "@app.activity_data_container.filter", "@app.activity_data_container.converter", "@security.token_storage", "@app.repository.account", "@app.repository.sport", "@app.repository.training", "%data_directory%/import/activity/queue/" ]
+    tags:
+      - { name: bernard.receiver, message: activityImport }
   app.activity.feed:
     class: Runalyze\View\Activity\Feed
   app.http_client:

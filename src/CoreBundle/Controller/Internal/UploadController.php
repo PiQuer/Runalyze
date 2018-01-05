@@ -2,6 +2,7 @@
 
 namespace Runalyze\Bundle\CoreBundle\Controller\Internal;
 
+use Runalyze\DEM\Exception\RuntimeException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,6 +11,8 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Bernard\Message\DefaultMessage;
 
 /**
  * @Route("/_internal/upload")
@@ -72,6 +75,47 @@ class UploadController extends Controller
             return new JsonResponse(['success' => true]);
         } catch (FileException $e) {
             return new JsonResponse(['error' => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * @Route("/direct", name="internal-activity-upload-direct")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function directUploadAction(Request $request, Account $account)
+    {
+        if ($request->files->has('file')) {
+            $filesystem = new Filesystem();
+            /** @var UploadedFile $file */
+            $file = $request->files->get('file');
+
+            //TODO Check if is allowed extension
+            //$file->getExtension();
+
+            if (class_exists('Normalizer')) {
+                $filename = $account->getId().uniqid().\Normalizer::normalize($file->getClientOriginalName());
+            }
+
+            try {
+                $file->move(
+                    $this->getParameter('data_directory').'/import/activity/queue',
+                    $filename
+                );
+
+                $this->get('bernard.producer')->produce(new DefaultMessage('activityImport', [
+                    'account' => $account->getId(),
+                    'filename' => $filename,
+                    'source' => 'browser',
+                    'sport' => null
+                ]));
+
+                return new JsonResponse(['success' => true]);
+            } catch (FileException $e) {
+                return new JsonResponse(['error' => $e->getMessage()]);
+            }
+
+        } else {
+            return new JsonResponse(['error' => 'no file']);
         }
     }
 }
