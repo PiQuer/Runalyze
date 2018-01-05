@@ -23,10 +23,10 @@ class SportController extends Controller
     }
 
     /**
-     * @Route("/all", name="internal-data-race-results-all")
+     * @Route("/all", name="internal-data-sport-all")
      * @Security("has_role('ROLE_USER')")
      */
-    public function allRaceResultsAction(Account $account)
+    public function allSportsAction(Account $account)
     {
         $result = [];
         $sports = $this->getSportRepository()->findAllFor($account);
