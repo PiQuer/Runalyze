@@ -10,6 +10,7 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\Backup\SqlBackup;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\AccountRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Common\AccountRelatedEntityInterface;
+use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Services\Activity\ActivityContextFactory;
 use Runalyze\Bundle\CoreBundle\Services\Configuration\ConfigurationManager;
@@ -125,7 +126,8 @@ class ActivityReceiver
         $importResult->completeAndFilterResults($this->activityDataContainerFilter);
         $defaultLocation = $this->configurationManager->getList()->getActivityForm()->getDefaultLocationForWeatherForecast();
 
-        if ($message->get('sport') !== null) {
+        $sport = null;
+        if (is_numeric($message->get('sport'))) {
             $possibleSport = $this->sportRepository->find((int)$message->get('sport'));
             if($possibleSport->getAccount()->getId() == $account->getId()) {
                 $sport = $possibleSport;
@@ -136,9 +138,10 @@ class ActivityReceiver
             /** @var $result FileImportResult */
             foreach ($result->getContainer() as $container) {
                 $activity = $this->containerToActivity($container, $account);
-               /* if ($sport) {
+                if ($sport) {
                     $activity->setSport($sport);
-                }*/
+                }
+
                 $context = new ActivityContext($activity, null, null, $activity->getRoute());
                 $contextAdapter = $this->activityContextAdapterFactory->getAdapterFor($context);
 
@@ -150,7 +153,6 @@ class ActivityReceiver
                 $contextAdapter->guessWeatherConditions($defaultLocation);
                 $this->trainingRepository->save($activity);
                 $this->Logger->info('Activity succesfully imported', ['filename' => $message->get('filename'), 'account' => $account->getId()]);
-
             }
         }
 

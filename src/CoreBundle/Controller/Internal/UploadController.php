@@ -79,7 +79,7 @@ class UploadController extends Controller
     }
 
     /**
-     * @Route("/direct", name="internal-activity-upload-direct")
+     * @Route("/direct", name="internal-activity-upload-direct", methods={"POST"})
      * @Security("has_role('ROLE_USER')")
      */
     public function directUploadAction(Request $request, Account $account)
@@ -93,7 +93,7 @@ class UploadController extends Controller
             //$file->getExtension();
 
             if (class_exists('Normalizer')) {
-                $filename = $account->getId().uniqid().\Normalizer::normalize($file->getClientOriginalName());
+                $filename = $account->getId().'-'.uniqid().\Normalizer::normalize($file->getClientOriginalName());
             }
 
             try {
@@ -106,7 +106,7 @@ class UploadController extends Controller
                     'account' => $account->getId(),
                     'filename' => $filename,
                     'source' => 'browser',
-                    'sport' => null
+                    'sport' => $request->request->get('sportid')
                 ]));
 
                 return new JsonResponse(['success' => true]);
