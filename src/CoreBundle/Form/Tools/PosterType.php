@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
@@ -71,6 +72,10 @@ class PosterType extends AbstractType
                 'required' => true,
                 'attr' => ['maxlength' => 11]
             ])
+            ->add('athlete', TextType::class, [
+                'required' => true,
+                'attr' => ['maxlength' => 11]
+            ])
             ->add('sport', ChoiceType::class, [
                 'choices' => $this->SportRepository->findWithDistancesFor($this->getAccount()),
                 'choice_label' => function($sport, $key, $index) {
@@ -88,6 +93,12 @@ class PosterType extends AbstractType
                     'DIN A0' => 14000
                  ],
             ])
+            ->add('unit', ChoiceType::class, [
+                'choices' => [
+                    'metric' => 'metric',
+                    'imperial' => 'imperial',
+                ],
+            ])
             ->add('backgroundColor', ColorType::class, [
                 'data' => '#222222',
                 'label' => 'Background'
@@ -103,6 +114,14 @@ class PosterType extends AbstractType
             ->add('raceColor', ColorType::class, [
                 'data' => '#FFFF00',
                 'label' => 'Race'
+            ])
+            ->add('circularRings', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Draw distance rings'
+            ])
+            ->add('circularRingColor', ColorType::class, [
+                'data' => '#FFFF00',
+                'label' => 'Color of distance rings'
             ])
         ;
     }

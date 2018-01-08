@@ -216,17 +216,23 @@ class ToolsController extends Controller
             if ($numberOfActivities <= 1) {
                 $this->addFlash('error', $this->get('translator')->trans('There are not enough activities to generate a poster. Please change your selection.'));
             } else {
+                print_r($formdata);
                 $message = new DefaultMessage('posterGenerator', array(
                     'accountid' => $account->getId(),
                     'year' => $formdata['year'],
                     'types' => $formdata['postertype'],
                     'sportid' => $formdata['sport'],
                     'title' => $formdata['title'],
+                    'athlete' => $formdata['athlete'],
                     'size' => $formdata['size'],
                     'backgroundColor' => $formdata['backgroundColor'],
                     'trackColor' => $formdata['trackColor'],
                     'textColor' => $formdata['textColor'],
                     'raceColor' => $formdata['raceColor'],
+                    'unit' => $formdata['unit'],
+                    'circularRingColor' => $formdata['circularRingColor'],
+                    'circularRings' => isset($formdata['circularRings']) ? true : false,
+
                 ));
                 $this->get('bernard.producer')->produce($message);
 
@@ -240,7 +246,8 @@ class ToolsController extends Controller
         return $this->render('tools/poster.html.twig', [
             'form' => $form->createView(),
             'posterStoragePeriod' => $this->getParameter('poster_storage_period'),
-            'listing' => $this->get('app.poster.filehandler')->getFileList($account)
+            'listing' => $this->get('app.poster.filehandler')->getFileList($account),
+            'username' => $account->getUsername()
         ]);
     }
 

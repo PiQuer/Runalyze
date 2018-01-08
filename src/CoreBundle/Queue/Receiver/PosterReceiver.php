@@ -125,7 +125,9 @@ class PosterReceiver
                         $message->get('backgroundColor'),
                         $message->get('trackColor'),
                         $message->get('textColor'),
-                        $message->get('raceColor')
+                        $message->get('raceColor'),
+                        $message->get('athlete'),
+                        $message->get('unit')
                     );
 
                     $finalName = $this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'));

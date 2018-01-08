@@ -24,6 +24,8 @@
                     {{ form_row(form.postertype, {'label': 'Choose postertype(s)'|trans}) }}
                     {{ form_row(form.sport, {'label': 'Choose sport'|trans}) }}
                     {{ form_row(form.year, {'label': 'Choose year'|trans}) }}
+                    {{ form_row(form.unit, {'label': 'Distance unit'|trans}) }}
+                    {{ form_row(form.athlete, {'label': 'Your name'|trans, 'value': username}) }}
                     {{ form_row(form.title, {'label': 'Poster title'|trans}) }}
                     {{ form_row(form.size, {'label': 'Choose size'|trans}) }}
                 </fieldset>
@@ -34,6 +36,12 @@
                     {{ form_row(form.trackColor) }}
                     {{ form_row(form.textColor) }}
                     {{ form_row(form.raceColor) }}
+                </fieldset>
+
+                <fieldset id="circular">
+                    <legend for="circular">{% trans %}Circular{% endtrans %} {% trans %}Options{% endtrans %}</legend>
+                    {{ form_row(form.circularRings) }}
+                    {{ form_row(form.circularRingColor) }}
                 </fieldset>
             {{ form_rest(form) }}
 

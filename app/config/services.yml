@@ -318,7 +318,7 @@ services:
     arguments: ["@app.repository.training", "@app.repository.race_result", "%kernel.root_dir%"]
   app.poster.generate_poster:
     class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\GeneratePoster
-    arguments: ["%kernel.root_dir%", "%python3_path%", "@app.repository.training"]
+    arguments: ["%kernel.root_dir%", "%python3_path%", "@app.repository.training", "@monolog.logger.queue"]
   app.poster.availability:
     class: Runalyze\Bundle\CoreBundle\Component\Tool\Poster\Availability
     arguments: ["%rsvg_path%", "%inkscape_path%", "%python3_path%"]

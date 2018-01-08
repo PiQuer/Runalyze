@@ -7,6 +7,7 @@ use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
+use Psr\Log\LoggerInterface;
 
 class GeneratePoster
 {
@@ -25,16 +26,22 @@ class GeneratePoster
     /** @var string */
     protected $Filename;
 
+    /** @var LoggerInterface */
+    protected $Logger;
+
+
     /**
      * @param string $kernelRootDir
      * @param string $python3Path
      * @param TrainingRepository $trainingRepository
+     * @param LoggerInterface $logger
      */
-    public function __construct($kernelRootDir, $python3Path, TrainingRepository $trainingRepository)
+    public function __construct($kernelRootDir, $python3Path, TrainingRepository $trainingRepository, LoggerInterface $logger)
     {
         $this->KernelRootDir = $kernelRootDir;
         $this->Python3Path = $python3Path;
         $this->TrainingRepository = $trainingRepository;
+        $this->Logger = $logger;
     }
 
     /**
@@ -67,6 +74,7 @@ class GeneratePoster
      */
     public function generate()
     {
+        $this->Logger->info('Poster converter params', ['params' => implode(' ', $this->Parameter)]);
         $builder = new Process($this->Python3Path.' create_poster.py '.implode(' ', $this->Parameter));
         $builder->setWorkingDirectory($this->pathToRepository())->run();
 
@@ -81,12 +89,13 @@ class GeneratePoster
      * @param Sport $sport
      * @param null|string $title
      */
-    public function buildCommand($type, $jsonDir, $year, Account $account, Sport $sport, $title, $backgroundColor, $trackColor, $textColor, $raceColor)
+    public function buildCommand($type, $jsonDir, $year, Account $account, Sport $sport, $title, $backgroundColor, $trackColor, $textColor, $raceColor, $athlete, $unit)
     {
         $this->generateRandomFileName($account->getUsername(), $year);
 
         $this->Parameter[] = '--json-dir '.$jsonDir;
-        $this->Parameter[] = '--athlete '.$account->getUsername();
+        $this->Parameter[] = '--athlete '.$athlete;
+        $this->Parameter[] = '--unit '.$unit;
         $this->Parameter[] = '--year '.(int)$year;
         $this->Parameter[] = '--output '.$this->pathToSvgDirectory().$this->Filename;
         $this->Parameter[] = '--type '.$type;
