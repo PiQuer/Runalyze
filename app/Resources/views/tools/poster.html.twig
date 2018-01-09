@@ -32,16 +32,18 @@
 
                 <fieldset id="colors">
                     <legend for="color">{% trans %}Colors{% endtrans %}</legend>
-                    {{ form_row(form.backgroundColor) }}
-                    {{ form_row(form.trackColor) }}
-                    {{ form_row(form.textColor) }}
-                    {{ form_row(form.raceColor) }}
+                    {{ form_row(form.backgroundColor, {'div_class': 'w50'} ) }}
+                    {{ form_row(form.trackColor, {'div_class': 'w50'}) }}
+                    {{ form_row(form.useTrackColorTwo, {'div_class': 'w50'}) }}
+                    {{ form_row(form.trackColorTwo, {'div_class': 'w50','help': 'You can define a gradient style color here'|trans}) }}
+                    {{ form_row(form.textColor, {'div_class': 'w50'}) }}
+                    {{ form_row(form.raceColor, {'div_class': 'w50'}) }}
                 </fieldset>
 
                 <fieldset id="circular">
                     <legend for="circular">{% trans %}Circular{% endtrans %} {% trans %}Options{% endtrans %}</legend>
-                    {{ form_row(form.circularRings) }}
-                    {{ form_row(form.circularRingColor) }}
+                    {{ form_row(form.circularRings, {'div_class': 'w50'}) }}
+                    {{ form_row(form.circularRingColor, {'div_class': 'w50'}) }}
                 </fieldset>
             {{ form_rest(form) }}
 

@@ -89,7 +89,7 @@ class GeneratePoster
      * @param Sport $sport
      * @param null|string $title
      */
-    public function buildCommand($type, $jsonDir, $year, Account $account, Sport $sport, $title, $backgroundColor, $trackColor, $textColor, $raceColor, $athlete, $unit)
+    public function buildCommand($type, $jsonDir, $year, Account $account, Sport $sport, $title, $backgroundColor, $trackColor, $trackColorTwo, $textColor, $raceColor, $athlete, $unit)
     {
         $this->generateRandomFileName($account->getUsername(), $year);
 
@@ -102,6 +102,9 @@ class GeneratePoster
         $this->Parameter[] = '--title '.escapeshellarg($title);
         $this->Parameter[] = '--background-color  '.escapeshellarg($backgroundColor);
         $this->Parameter[] = '--track-color '.escapeshellarg($trackColor);
+        if (!empty($trackColorTwo)) {
+            $this->Parameter[] = '--track-color2 ' . escapeshellarg($trackColorTwo);
+        }
         $this->Parameter[] = '--text-color '.escapeshellarg($textColor);
         $this->Parameter[] = '--special-color '.escapeshellarg($raceColor);
 

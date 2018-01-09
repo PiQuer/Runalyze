@@ -124,6 +124,7 @@ class PosterReceiver
                         $message->get('title'),
                         $message->get('backgroundColor'),
                         $message->get('trackColor'),
+                        $message->get('trackColorTwo'),
                         $message->get('textColor'),
                         $message->get('raceColor'),
                         $message->get('athlete'),

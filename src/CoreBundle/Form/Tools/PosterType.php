@@ -70,11 +70,11 @@ class PosterType extends AbstractType
             ])
             ->add('title', TextType::class, [
                 'required' => true,
-                'attr' => ['maxlength' => 11]
+                'attr' => ['maxlength' => 15]
             ])
             ->add('athlete', TextType::class, [
                 'required' => true,
-                'attr' => ['maxlength' => 11]
+                'attr' => ['maxlength' => 14]
             ])
             ->add('sport', ChoiceType::class, [
                 'choices' => $this->SportRepository->findWithDistancesFor($this->getAccount()),
@@ -106,6 +106,13 @@ class PosterType extends AbstractType
             ->add('trackColor', ColorType::class, [
                 'data' => '#4DD2FF',
                 'label' => 'Activity'
+            ])
+            ->add('useTrackColorTwo', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Use Gradient Coloring'
+            ])
+            ->add('trackColorTwo', ColorType::class, [
+                'label' => 'Activity (Gradient Coloring)'
             ])
             ->add('textColor', ColorType::class, [
                 'data' => '#FFFFFF',
