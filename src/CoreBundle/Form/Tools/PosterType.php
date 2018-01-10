@@ -2,28 +2,26 @@
 
 namespace Runalyze\Bundle\CoreBundle\Form\Tools;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
+use Runalyze\Bundle\CoreBundle\Form\AbstractTokenStorageAwareType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
-class PosterType extends AbstractType
+class PosterType extends AbstractTokenStorageAwareType
 {
     /** @var TrainingRepository */
     protected $TrainingRepository;
 
     /** @var SportRepository */
     protected $SportRepository;
-
-    /** @var TokenStorage */
-    protected $TokenStorage;
 
     public function __construct(
         SportRepository $sportRepository,
@@ -33,21 +31,8 @@ class PosterType extends AbstractType
     {
         $this->SportRepository = $sportRepository;
         $this->TrainingRepository = $trainingRepository;
-        $this->TokenStorage = $tokenStorage;
-    }
 
-    /**
-     * @return Account
-     */
-    protected function getAccount()
-    {
-        $account = $this->TokenStorage->getToken() ? $this->TokenStorage->getToken()->getUser() : null;
-
-        if (!($account instanceof Account)) {
-            throw new \RuntimeException('Poster type must have a valid account token.');
-        }
-
-        return $account;
+        parent::__construct($tokenStorage);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -55,12 +40,14 @@ class PosterType extends AbstractType
         $builder
             ->add('postertype', ChoiceType::class, [
                 'multiple' => true,
+                'expanded' => true,
                 'choices' => [
                     'Circular' => 'circular',
                     'Calendar' => 'calendar',
                     'Grid'     => 'grid',
-                    'Heatmap'  => 'heatmap'],
-                'attr' => ['class' => 'chosen-select full-size']
+                    'Heatmap'  => 'heatmap'
+                ],
+                'attr' => ['class' => 'full-size']
             ])
             ->add('year', ChoiceType::class, [
                 'choices' => $this->TrainingRepository->getActiveYearsFor($this->getAccount(), null, 2),
@@ -129,6 +116,12 @@ class PosterType extends AbstractType
             ->add('circularRingColor', ColorType::class, [
                 'data' => '#FFFF00',
                 'label' => 'Color of distance rings'
+            ])
+            ->add('locationCenter', TextType::class, [
+                'required' => false
+            ])
+            ->add('locationRadius', IntegerType::class, [
+                'required' => false
             ])
         ;
     }

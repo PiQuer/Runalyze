@@ -8,7 +8,7 @@
     <div class="panel-content">
         {% block toolContent %}
         <div class="panel-content">
-            {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reload'}, 'action': url('poster')}) }}
+            {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reload', 'id': 'form-poster-tool'}, 'action': url('poster')}) }}
 
                 <div class="c">
                     <img src="{{ asset('assets/images/poster-collage.png') }}">
@@ -19,10 +19,25 @@
                 {% include 'flashmessages.html.twig' %}
 
                 <p class="text">&nbsp;</p>
-                <fieldset id="general">
+                <fieldset id="fieldset-general">
                     <legend>{% trans %}General{% endtrans %}</legend>
-                    {{ form_row(form.postertype, {'label': 'Choose postertype(s)'|trans}) }}
-                    {{ form_row(form.sport, {'label': 'Choose sport'|trans}) }}
+                    <div class="w100">
+                        <label>{{ 'Choose postertype(s)'|trans }}</label>
+
+                        <div class="full-size left checkbox-collection">
+                        {% for type in form.postertype %}
+                        <div class="w25 checkbox-first">
+                            {{ form_widget(type) }}
+                            {{ form_label(type) }}
+                        </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+
+                    {{ form_errors(form.postertype) }}
+                    {% do form.postertype.setRendered() %}
+
+                    {{ form_row(form.sport, {'label': 'Choose sport'|trans, 'div_class': 'margin-top'}) }}
                     {{ form_row(form.year, {'label': 'Choose year'|trans}) }}
                     {{ form_row(form.unit, {'label': 'Distance unit'|trans}) }}
                     {{ form_row(form.athlete, {'label': 'Your name'|trans, 'value': username}) }}
@@ -30,27 +45,35 @@
                     {{ form_row(form.size, {'label': 'Choose size'|trans}) }}
                 </fieldset>
 
-                <fieldset id="colors">
-                    <legend for="color">{% trans %}Colors{% endtrans %}</legend>
+                <fieldset id="fieldset-colors">
+                    <legend>{% trans %}Colors{% endtrans %}</legend>
                     {{ form_row(form.backgroundColor, {'div_class': 'w50'} ) }}
-                    {{ form_row(form.trackColor, {'div_class': 'w50'}) }}
-                    {{ form_row(form.useTrackColorTwo, {'div_class': 'w50'}) }}
-                    {{ form_row(form.trackColorTwo, {'div_class': 'w50','help': 'You can define a gradient style color here'|trans}) }}
                     {{ form_row(form.textColor, {'div_class': 'w50'}) }}
+                    {{ form_row(form.trackColor, {'div_class': 'w50'}) }}
                     {{ form_row(form.raceColor, {'div_class': 'w50'}) }}
+                    {{ form_row(form.trackColorTwo, {'div_class': 'w50','help': 'You can define a gradient style color here'|trans}) }}
+                    {{ form_row(form.useTrackColorTwo, {'div_class': 'w50'}) }}
                 </fieldset>
 
-                <fieldset id="circular">
-                    <legend for="circular">{% trans %}Circular{% endtrans %} {% trans %}Options{% endtrans %}</legend>
+                <fieldset id="fieldset-circular" class="only-postertype-circular">
+                    <legend>{% trans %}Circular{% endtrans %} {% trans %}Options{% endtrans %}</legend>
                     {{ form_row(form.circularRings, {'div_class': 'w50'}) }}
                     {{ form_row(form.circularRingColor, {'div_class': 'w50'}) }}
+                </fieldset>
+
+                <fieldset id="fieldset-circular" class="only-postertype-heatmap">
+                    <legend>{% trans %}Location{% endtrans %} {% trans %}Options{% endtrans %}</legend>
+                    {{ form_row(form.locationCenter, {'label': 'Center'|trans}) }}
+                    {{ form_row(form.locationRadius, {'label': 'Radius'|trans, 'input_unit': 'km', 'attr': {'class': 'small-size'}}) }}
+
+                    <div class="w100" id="poster-location-picker-map" style="height:300px;width:750px;margin-left:auto;margin-right:auto;"></div>
                 </fieldset>
             {{ form_rest(form) }}
 
 
             <div class="c">
-                    <input type="submit" value="{% trans %}Generate posters{% endtrans %}">
-                </div>
+                <input type="submit" value="{% trans %}Generate posters{% endtrans %}">
+            </div>
 
             {{ form_end(form) }}
         </div>
@@ -77,5 +100,58 @@
             <p class="warning">{% trans with {'%days%': posterStoragePeriod }%}Please download the posters within %days% days.{% endtrans %}</p>
         {% endif %}
     </div>
+
+<script>
+(function($){
+    var $form = $("#form-poster-tool");
+    var $general = $("#fieldset-general");
+    var toggleType = function(type, flag) {
+        $form.find('.only-postertype-'+type).toggle(flag);
+    };
+    $general.find('input[type=checkbox]').each(function(){
+        toggleType($(this).val(), $(this).is(':checked'));
+    
+        $(this).on('change', function(){
+            toggleType($(this).val(), $(this).is(':checked'));
+        });
+    });
+
+    L.Icon.Default.imagePath = '{{ asset('vendor/leaflet/dist/images') }}';
+
+    var pos = [{{ defaultLocation.lat }}, {{ defaultLocation.lng }}];
+    var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    
+    var map = L.map('poster-location-picker-map', {
+      center: pos,
+      zoom: 8
+    }).addLayer(osm);
+    
+    var marker = new L.marker(pos, {
+      draggable: true
+    }).addTo(map);
+    
+    var circle = new L.circle(pos, {{ defaultRadius*1000 }}).addTo(map);
+    
+    marker.on("dragend", function(e) {
+      var marker = e.target;
+      var position = marker.getLatLng();
+      map.panTo(new L.LatLng(position.lat, position.lng));
+      circle.setLatLng(new L.LatLng(position.lat, position.lng));
+    
+      $("#poster_locationCenter").val(position.lat.toFixed(4) + ',' + position.lng.toFixed(4));
+    });
+    
+    $("#poster_locationRadius").change(function(){
+      circle.setRadius(parseInt($(this).val()) * 1000);
+      map.fitBounds(circle.getBounds());
+    });
+    
+    $("#poster_locationCenter").val(pos[0] + ',' + pos[1]);
+    map.fitBounds(circle.getBounds());
+})(jQuery);
+</script>
 
 {% endblock %}

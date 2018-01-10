@@ -205,7 +205,9 @@ class ToolsController extends Controller
         $form = $this->createForm(PosterType::class, [
             'postertype' => ['heatmap'],
             'year' => date('Y') - 1,
-            'title' => ' '
+            'title' => ' ',
+            'locationRadius' => 50,
+            'locationCenter' => '' // TODO
         ]);
         $form->handleRequest($request);
 
@@ -231,8 +233,7 @@ class ToolsController extends Controller
                     'raceColor' => $formdata['raceColor'],
                     'unit' => $formdata['unit'],
                     'circularRingColor' => $formdata['circularRingColor'],
-                    'circularRings' => isset($formdata['circularRings']) ? true : false,
-
+                    'circularRings' => isset($formdata['circularRings'])
                 ));
                 $this->get('bernard.producer')->produce($message);
 
@@ -247,7 +248,9 @@ class ToolsController extends Controller
             'form' => $form->createView(),
             'posterStoragePeriod' => $this->getParameter('poster_storage_period'),
             'listing' => $this->get('app.poster.filehandler')->getFileList($account),
-            'username' => $account->getUsername()
+            'username' => $account->getUsername(),
+            'defaultLocation' => ['lat' => 53.5, 'lng' => 10.0], // TODO
+            'defaultRadius' => 50 // TODO
         ]);
     }
 

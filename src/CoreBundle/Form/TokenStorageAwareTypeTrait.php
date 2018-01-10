@@ -23,7 +23,7 @@ trait TokenStorageAwareTypeTrait
         $account = $this->TokenStorage->getToken() ? $this->TokenStorage->getToken()->getUser() : null;
 
         if (!($account instanceof Account)) {
-            throw new \RuntimeException('Activity type must have a valid account token.');
+            throw new \RuntimeException('This type must have a valid account token.');
         }
 
         return $account;

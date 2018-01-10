@@ -29,7 +29,6 @@ class GeneratePoster
     /** @var LoggerInterface */
     protected $Logger;
 
-
     /**
      * @param string $kernelRootDir
      * @param string $python3Path
@@ -74,7 +73,8 @@ class GeneratePoster
      */
     public function generate()
     {
-        $this->Logger->info('Poster converter params', ['params' => implode(' ', $this->Parameter)]);
+        $this->Logger->info('Poster creation requested.', ['params' => implode(' ', $this->Parameter)]);
+
         $builder = new Process($this->Python3Path.' create_poster.py '.implode(' ', $this->Parameter));
         $builder->setWorkingDirectory($this->pathToRepository())->run();
 
@@ -88,6 +88,13 @@ class GeneratePoster
      * @param Account $account
      * @param Sport $sport
      * @param null|string $title
+     * @param string $backgroundColor
+     * @param string $trackColor
+     * @param string $trackColorTwo
+     * @param string $textColor
+     * @param string $raceColor
+     * @param string $athlete
+     * @param string $unit
      */
     public function buildCommand($type, $jsonDir, $year, Account $account, Sport $sport, $title, $backgroundColor, $trackColor, $trackColorTwo, $textColor, $raceColor, $athlete, $unit)
     {
@@ -102,9 +109,11 @@ class GeneratePoster
         $this->Parameter[] = '--title '.escapeshellarg($title);
         $this->Parameter[] = '--background-color  '.escapeshellarg($backgroundColor);
         $this->Parameter[] = '--track-color '.escapeshellarg($trackColor);
+
         if (!empty($trackColorTwo)) {
-            $this->Parameter[] = '--track-color2 ' . escapeshellarg($trackColorTwo);
+            $this->Parameter[] = '--track-color2 '.escapeshellarg($trackColorTwo);
         }
+
         $this->Parameter[] = '--text-color '.escapeshellarg($textColor);
         $this->Parameter[] = '--special-color '.escapeshellarg($raceColor);
 
