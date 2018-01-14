@@ -385,6 +385,29 @@ class TrainingRepository extends EntityRepository
     /**
      * @param Account $account
      * @param int $limit
+     * @param bool $onlyPublic
+     * @return Training[]
+     */
+    public function getLatestActivitiesWithRoutes(Account $account, $limit = 20, $onlyPublic = false)
+    {
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->select('t')
+            ->where('t.account = :accountid')
+            ->andWhere('t.route IS NOT NULL')
+            ->setParameter('accountid', $account->getId())
+            ->orderBy('t.time', 'DESC')
+            ->setMaxResults($limit);
+
+        if ($onlyPublic) {
+            $queryBuilder->andWhere('t.isPublic = 1');
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param Account $account
+     * @param int $limit
      * @return Training[]
      */
     public function getLatestPublicActivities(Account $account, $limit = 20)

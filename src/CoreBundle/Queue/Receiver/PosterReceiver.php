@@ -128,7 +128,9 @@ class PosterReceiver
                         $message->get('textColor'),
                         $message->get('raceColor'),
                         $message->get('athlete'),
-                        $message->get('unit')
+                        $message->get('unit'),
+                        $message->get('heatmap-center'),
+                        $message->get('heatmap-radius')
                     );
 
                     $finalName = $this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'));

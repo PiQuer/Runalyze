@@ -80,6 +80,58 @@
             <p class="info">{% trans %}There are some ideas for future improvements of this tool.{% endtrans %}
             {% trans with {'%forum%': '<a href="https://forum.runalyze.com/viewtopic.php?f=8&t=604#p2649">forum.runalyze.com</a>'}%}Let us know what is most important for you at %forum%{% endtrans %}</p>
 
+            <script>
+                (function($){
+                    var $form = $("#form-poster-tool");
+                    var $general = $("#fieldset-general");
+                    var toggleType = function(type, flag) {
+                        $form.find('.only-postertype-'+type).toggle(flag);
+                    };
+                    $general.find('input[type=checkbox]').each(function(){
+                        toggleType($(this).val(), $(this).is(':checked'));
+
+                        $(this).on('change', function(){
+                            toggleType($(this).val(), $(this).is(':checked'));
+                        });
+                    });
+
+                    L.Icon.Default.imagePath = '{{ asset('vendor/leaflet/dist/images') }}';
+
+                    var pos = [{{ defaultLocation.lat }}, {{ defaultLocation.lng }}];
+                    var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                        maxZoom: 18,
+                        attribution: '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    });
+
+                    var map = L.map('poster-location-picker-map', {
+                        center: pos,
+                        zoom: 8
+                    }).addLayer(osm);
+
+                    var marker = new L.marker(pos, {
+                        draggable: true
+                    }).addTo(map);
+
+                    var circle = new L.circle(pos, {{ defaultRadius*1000 }}).addTo(map);
+
+                    marker.on("dragend", function(e) {
+                        var marker = e.target;
+                        var position = marker.getLatLng();
+                        map.panTo(new L.LatLng(position.lat, position.lng));
+                        circle.setLatLng(new L.LatLng(position.lat, position.lng));
+
+                        $("#poster_locationCenter").val(position.lat.toFixed(4) + ',' + position.lng.toFixed(4));
+                    });
+
+                    $("#poster_locationRadius").change(function(){
+                        circle.setRadius(parseInt($(this).val()) * 1000);
+                        map.fitBounds(circle.getBounds());
+                    });
+
+                    $("#poster_locationCenter").val(pos[0] + ',' + pos[1]);
+                    map.fitBounds(circle.getBounds());
+                })(jQuery);
+            </script>
         {% endblock %}
     </div>
 
@@ -101,57 +153,6 @@
         {% endif %}
     </div>
 
-<script>
-(function($){
-    var $form = $("#form-poster-tool");
-    var $general = $("#fieldset-general");
-    var toggleType = function(type, flag) {
-        $form.find('.only-postertype-'+type).toggle(flag);
-    };
-    $general.find('input[type=checkbox]').each(function(){
-        toggleType($(this).val(), $(this).is(':checked'));
-    
-        $(this).on('change', function(){
-            toggleType($(this).val(), $(this).is(':checked'));
-        });
-    });
 
-    L.Icon.Default.imagePath = '{{ asset('vendor/leaflet/dist/images') }}';
-
-    var pos = [{{ defaultLocation.lat }}, {{ defaultLocation.lng }}];
-    var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      attribution: '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-    
-    var map = L.map('poster-location-picker-map', {
-      center: pos,
-      zoom: 8
-    }).addLayer(osm);
-    
-    var marker = new L.marker(pos, {
-      draggable: true
-    }).addTo(map);
-    
-    var circle = new L.circle(pos, {{ defaultRadius*1000 }}).addTo(map);
-    
-    marker.on("dragend", function(e) {
-      var marker = e.target;
-      var position = marker.getLatLng();
-      map.panTo(new L.LatLng(position.lat, position.lng));
-      circle.setLatLng(new L.LatLng(position.lat, position.lng));
-    
-      $("#poster_locationCenter").val(position.lat.toFixed(4) + ',' + position.lng.toFixed(4));
-    });
-    
-    $("#poster_locationRadius").change(function(){
-      circle.setRadius(parseInt($(this).val()) * 1000);
-      map.fitBounds(circle.getBounds());
-    });
-    
-    $("#poster_locationCenter").val(pos[0] + ',' + pos[1]);
-    map.fitBounds(circle.getBounds());
-})(jQuery);
-</script>
 
 {% endblock %}

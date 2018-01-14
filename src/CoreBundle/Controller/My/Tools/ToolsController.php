@@ -8,6 +8,7 @@ use Runalyze\Bundle\CoreBundle\Component\Tool\DatabaseCleanup\JobLoop;
 use Runalyze\Bundle\CoreBundle\Component\Tool\TrendAnalysis\TrendAnalysisDataQuery;
 use Runalyze\Bundle\CoreBundle\Component\Tool\VO2maxAnalysis\VO2maxAnalysis;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
+use Runalyze\Bundle\CoreBundle\Entity\Training;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaData;
 use Runalyze\Bundle\CoreBundle\Form\Tools\Anova\AnovaType;
 use Runalyze\Bundle\CoreBundle\Form\Tools\DatabaseCleanupType;
@@ -200,7 +201,8 @@ class ToolsController extends Controller
      */
     public function posterAction(Request $request, Account $account)
     {
-        $numberOfActivities = $this->getDoctrine()->getRepository('CoreBundle:Training')->getNumberOfActivitiesFor($account, (int)2017, (int)2);
+        $latestActivity = $this->getDoctrine()->getRepository('CoreBundle:Training')->getLatestActivities($account, 1);
+        $numberOfActivities = $this->getDoctrine()->getRepository('CoreBundle:Training')->getLatestActivitiesWithRoutes($account, (int)2017, (int)2);
 
         $form = $this->createForm(PosterType::class, [
             'postertype' => ['heatmap'],
@@ -233,7 +235,9 @@ class ToolsController extends Controller
                     'raceColor' => $formdata['raceColor'],
                     'unit' => $formdata['unit'],
                     'circularRingColor' => $formdata['circularRingColor'],
-                    'circularRings' => isset($formdata['circularRings'])
+                    'circularRings' => isset($formdata['circularRings']),
+                    'heatmap-center' => $formdata['locationCenter'],
+                    'heatmap-radius' => $formdata['locationRadius']
                 ));
                 $this->get('bernard.producer')->produce($message);
 

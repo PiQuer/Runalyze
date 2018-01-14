@@ -99,7 +99,8 @@ class PosterType extends AbstractTokenStorageAwareType
                 'label' => 'Use Gradient Coloring'
             ])
             ->add('trackColorTwo', ColorType::class, [
-                'label' => 'Activity (Gradient Coloring)'
+                'label' => 'Activity (Gradient Coloring)',
+                'data' => '#4DD2FF',
             ])
             ->add('textColor', ColorType::class, [
                 'data' => '#FFFFFF',
