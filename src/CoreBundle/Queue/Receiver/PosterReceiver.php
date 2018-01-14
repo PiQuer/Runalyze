@@ -130,7 +130,9 @@ class PosterReceiver
                         $message->get('athlete'),
                         $message->get('unit'),
                         $message->get('heatmap-center'),
-                        $message->get('heatmap-radius')
+                        $message->get('heatmap-radius'),
+                        $message->get('circularRings'),
+                        $message->get('circularRingColor')
                     );
 
                     $finalName = $this->FileHandler->buildFinalFileName($account, $sport, $message->get('year'), $type, $message->get('size'));

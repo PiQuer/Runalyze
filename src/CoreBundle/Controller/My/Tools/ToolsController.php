@@ -202,7 +202,7 @@ class ToolsController extends Controller
     public function posterAction(Request $request, Account $account)
     {
         $latestActivity = $this->getDoctrine()->getRepository('CoreBundle:Training')->getLatestActivities($account, 1);
-        $numberOfActivities = $this->getDoctrine()->getRepository('CoreBundle:Training')->getLatestActivitiesWithRoutes($account, (int)2017, (int)2);
+        $numberOfActivities = $this->getDoctrine()->getRepository('CoreBundle:Training')->getNumberOfActivitiesFor($account, (int)2017, (int)2);
 
         $form = $this->createForm(PosterType::class, [
             'postertype' => ['heatmap'],
@@ -220,7 +220,6 @@ class ToolsController extends Controller
             if ($numberOfActivities <= 1) {
                 $this->addFlash('error', $this->get('translator')->trans('There are not enough activities to generate a poster. Please change your selection.'));
             } else {
-                print_r($formdata);
                 $message = new DefaultMessage('posterGenerator', array(
                     'accountid' => $account->getId(),
                     'year' => $formdata['year'],

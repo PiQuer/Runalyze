@@ -96,12 +96,12 @@ class GeneratePoster
      * @param string $athlete
      * @param string $unit
      */
-    public function buildCommand($type, $jsonDir, $year, Account $account, Sport $sport, $title, $backgroundColor, $trackColor, $trackColorTwo, $textColor, $raceColor, $athlete, $unit, $heatmapCenter, $heatmapRadius)
+    public function buildCommand($type, $jsonDir, $year, Account $account, Sport $sport, $title, $backgroundColor, $trackColor, $trackColorTwo, $textColor, $raceColor, $athlete, $unit, $heatmapCenter, $heatmapRadius, $circularRings, $circularRingColor)
     {
         $this->generateRandomFileName($account->getUsername(), $year);
 
         $this->Parameter[] = '--json-dir '.$jsonDir;
-        $this->Parameter[] = '--athlete '.$athlete;
+        $this->Parameter[] = '--athlete '.escapeshellarg($athlete);
         $this->Parameter[] = '--unit '.escapeshellarg($unit);
         $this->Parameter[] = '--year '.(int)$year;
         $this->Parameter[] = '--output '.$this->pathToSvgDirectory().$this->Filename;
@@ -111,6 +111,10 @@ class GeneratePoster
         $this->Parameter[] = '--track-color '.escapeshellarg($trackColor);
         $this->Parameter[] = '--heatmap-center '.escapeshellarg($heatmapCenter);
         $this->Parameter[] = '--heatmap-radius '.escapeshellarg($heatmapRadius);
+        if ($circularRings) {
+            $this->Parameter[] = '--circular-rings';
+            $this->Parameter[] = '--circular-ring-color '.escapeshellarg($circularRingColor);
+        }
 
 
         if (!empty($trackColorTwo)) {
