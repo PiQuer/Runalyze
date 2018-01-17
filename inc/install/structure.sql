@@ -485,6 +485,22 @@ CREATE TABLE IF NOT EXISTS `runalyze_notification` (
   INDEX IDX_F99B51889B6B5FBA (account_id),
   PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
+
+--
+-- Tabellenstruktur für Tabelle `runalyze_zone`
+--
+CREATE TABLE IF NOT EXISTS `runalyze_zone` (
+  `id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+  sport_id INT UNSIGNED NOT NULL,
+  account_id INT UNSIGNED NOT NULL,
+  metric_id TINYINT UNSIGNED DEFAULT NULL COMMENT '(DC2Type:tinyint)',
+  settings TEXT NOT NULL COMMENT '(DC2Type:json_array)',
+  INDEX IDX_7737055FAC78BCF8 (sport_id),
+  INDEX IDX_7737055F9B6B5FBA (account_id),
+  INDEX accountid_time (account_id, sport_id),
+  PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+
 -- --------------------------------------------------------
 
 --

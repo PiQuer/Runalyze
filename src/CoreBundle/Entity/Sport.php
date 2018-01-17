@@ -164,6 +164,13 @@ class Sport implements IdentifiableEntityInterface, NamedEntityInterface, Accoun
     protected $types;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection|Type[]
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Zone", mappedBy="sport", fetch="EXTRA_LAZY")
+     */
+    protected $zones;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Training", mappedBy="sport", cascade={"persist"}, fetch="EXTRA_LAZY")
@@ -582,6 +589,14 @@ class Sport implements IdentifiableEntityInterface, NamedEntityInterface, Accoun
     public function getTypes()
     {
         return $this->types;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection|Type[]
+     */
+    public function getZones()
+    {
+        return $this->zones;
     }
 
     /**
