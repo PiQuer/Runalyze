@@ -25,6 +25,26 @@ class ZoneRepository extends EntityRepository
         ]);
     }
 
+    /**
+     * @param Account $account
+     * @param int $metric
+     * @param Sport|null $sport
+     * @return Zone[]
+     */
+    public function findMetricForSport(Account $account, $metric, Sport $sport = null)
+    {
+        if (null !== $sport) {
+            return $this->findBy([
+                'account' => $account->getId(),
+                'sport' => $sport->getId()
+            ]);
+        }
+
+        return $this->findBy([
+            'account' => $account->getId()
+        ]);
+    }
+
     public function save(Zone $zone)
     {
         $this->_em->persist($zone);

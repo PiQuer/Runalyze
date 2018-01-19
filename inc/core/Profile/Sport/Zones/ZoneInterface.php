@@ -19,4 +19,9 @@ interface ZoneInterface
      */
     public function getDefaultSettings();
 
+    /**
+     * @return array
+     */
+    public function getFormType();
+
 }

@@ -25,4 +25,11 @@ class Power implements ZoneInterface
         return [];
     }
 
+    /**
+     * @return array
+     */
+    public function getFormType() {
+        return ;
+    }
+
 }

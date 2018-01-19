@@ -2,8 +2,6 @@
 
 {% from '_macro/form.html.twig' import dangerZoneDelete, addOrUpdateButton %}
 
-{% set configList = config().activityForm %}
-{# @var configList \Runalyze\Bundle\CoreBundle\Component\Configuration\Category\ActivityForm #}
 
 {% set generalConfig = config().general %}
 {# @var configList \Runalyze\Bundle\CoreBundle\Component\Configuration\Category\General #}
@@ -11,17 +9,80 @@
 {% block content %}
     <div class="panel-heading">
         {% if form.vars.data.id is null%}
-            <h1>{{ 'Edit'|trans }} {{ metric }} </h1>
+            <h1>{{ 'Edit'|trans }} {{ metric }} Zone </h1>
         {% endif %}
     </div>
 
     <div class="panel-content margin-bottom-2x">
         {% include 'flashmessages.html.twig' %}
 
+        {{ form_start(form, {'attr': {'class': 'ajax no-automatic-reload'} }) }}
 
+        <table class="c fullwidth zebra-style" id="conf-tab-dataset">
+            <thead>
+            <tr>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <th>{% trans %}start...{% endtrans %}</th>
+                <th></th>
+                <th>{% trans %}to..{% endtrans %}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr class="range-prototype">
+                <th class="inline">{{ form_widget(form.ranges.vars.prototype.name) }}</th>
+                <th class="inline">{{ form_widget(form.ranges.vars.prototype.range_from) }}</th>
+                <th>&nbsp;{{ 'to'|trans }}</th>&nbsp;
+                <th class="inline">{{ form_widget(form.ranges.vars.prototype.range_to) }}</th> &nbsp;
+            </tr>
+
+
+        {{ form_row(form.ranges, {'attr': {'class': 'ranges'}}) }}
+            </tbody>
+        </table>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
 
     </div>
+<script>
+    var $addZoneLink = $('<a href="#" class="add_zone_link">{% trans %}Add a zone{% endtrans %}</a>');
+    var $newLinkLi = $('<div></div>').append($addZoneLink);
 
+    jQuery(document).ready(function() {
+        var $collectionHolder = $('div.ranges');
+        $collectionHolder.append($newLinkLi);
+
+        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+        $addZoneLink.on('click', function(e) {
+            e.preventDefault();
+            addZoneForm($collectionHolder, $newLinkLi);
+        });
+
+
+    });
+
+    function addZoneForm($collectionHolder, $newLinkLi) {
+        var prototype = $collectionHolder.data('prototype');
+        var index = $collectionHolder.data('index');
+        var newForm = prototype.replace(/__name__/g, index);
+        $collectionHolder.data('index', index + 1);
+
+        var $newFormLi = $('<tr></tr>').append(newForm);
+        $newFormLi.append('<a href="#" class="remove-zone">x</a>');
+
+        $newLinkLi.before($newFormLi);
+
+        $('.remove-zone').click(function(e) {
+            e.preventDefault();
+
+            $(this).parent().remove();
+
+            return false;
+        });
+    }
+</script>
 
 
     <div class="panel-content">
@@ -30,7 +91,5 @@
         </p>
     </div>
 
-    {% if form.vars.data.id is not null and form.vars.data.trainings.count() < 1 and generalConfig.getMainSport != form.vars.data.id %}
-       {{ dangerZoneDelete(url('sport-delete', {'id': form.vars.data.id}), 'deleteSport') }}
-    {% endif %}
+
 {% endblock %}

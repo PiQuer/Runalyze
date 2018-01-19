@@ -10,9 +10,11 @@ use Runalyze\Bundle\CoreBundle\Entity\Type;
 use Runalyze\Bundle\CoreBundle\Entity\Zone;
 use Runalyze\Bundle\CoreBundle\Entity\ZoneRepository;
 use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
+use Runalyze\Bundle\CoreBundle\Form\Settings\Zones\HeartrateZoneType;
 use Runalyze\Bundle\CoreBundle\Form;
 use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
 use Runalyze\Profile\Sport\SportProfile;
+use Runalyze\Profile\Sport\Zones\Heartrate;
 use Runalyze\Profile\View\DataBrowserRowProfile;
 use Runalyze\Common\Enum\AbstractEnumFactoryTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -75,20 +77,22 @@ class SportController extends Controller
 
     /**
      * @Route("/{sportid}/zone/{metric}", name="sport-zone", requirements={"sportid" = "\d+"})
+     * @ParamConverter("sport", class="CoreBundle:Sport", options={"id" = "sportid"})
      */
-    public function sportZoneEditAction(Request $request, $sportid, $metric, Account $account)
+    public function sportZoneEditAction(Request $request, $sportid, $metric, Sport $sport, Account $account)
     {
-       /** $form = $this->createForm(Form\Settings\SportTypeType::class, $type ,[
-            'action' => $this->generateUrl('sport-type-add', ['sportid' => $sportid])
+        $metricProfile = $this->getZoneRepository()->findMetricForSport($account, 1,  $sport);
+        $form = $this->createForm(HeartrateZoneType::class, [] ,[
+            'action' => $this->generateUrl('sport-zone', ['sportid' => $sportid, 'metric' => $metric])
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
         }
-*/
+
         return $this->render('settings/sport/form-zone.html.twig', [
-            //'form' => $form->createView(),
+            'form' => $form->createView(),
             'sport_id' => $sportid,
             'metric' => $metric
         ]);

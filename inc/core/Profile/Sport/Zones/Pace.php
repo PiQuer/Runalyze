@@ -10,6 +10,10 @@ use Runalyze\Profile\Sport\Zones\ZoneInterface;
 class Pace implements ZoneInterface
 {
 
+    public function getInternalName() {
+        return 'pace';
+    }
+
     public function getName()
     {
         return __('Pace');
@@ -23,6 +27,13 @@ class Pace implements ZoneInterface
     public function getDefaultSettings()
     {
         return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormType() {
+        return ;
     }
 
 }

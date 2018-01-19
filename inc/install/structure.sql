@@ -474,6 +474,7 @@ CREATE TABLE IF NOT EXISTS `bernard_queues` (
 --
 -- Tabellenstruktur für Tabelle `runalyze_notification`
 --
+--
 CREATE TABLE IF NOT EXISTS `runalyze_notification` (
   `id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
   `messageType`  tinyint unsigned NOT NULL,
