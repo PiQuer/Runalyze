@@ -9,6 +9,12 @@ use Runalyze\Profile\Sport\Zones\ZoneInterface;
  */
 class Heartrate implements ZoneInterface
 {
+
+    public function getName()
+    {
+        return __('Heartrate');
+    }
+
     public function getUnit()
     {
         return 'bpm';

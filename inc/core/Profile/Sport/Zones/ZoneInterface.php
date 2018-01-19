@@ -7,6 +7,11 @@ interface ZoneInterface
     /**
      * @return string
      */
+    public function getName();
+
+    /**
+     * @return string
+     */
     public function getUnit();
 
     /**

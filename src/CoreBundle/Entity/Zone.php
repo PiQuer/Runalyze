@@ -37,7 +37,7 @@ class Zone implements IdentifiableEntityInterface, AccountRelatedEntityInterface
     /**
      * @var int|null see \Runalyze\Profile\Sport\ZoneMetricProfile
      *
-     * @ORM\Column(name="metric_id", type="tinyint", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="metric_id", type="tinyint", options={"unsigned":true})
      */
     private $metric = null;
 

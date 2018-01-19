@@ -9,6 +9,11 @@ use Runalyze\Profile\Sport\Zones\ZoneInterface;
  */
 class Pace implements ZoneInterface
 {
+
+    public function getName()
+    {
+        return __('Pace');
+    }
     //TODO Depends on sport type, so stored values should be in s
     public function getUnit()
     {

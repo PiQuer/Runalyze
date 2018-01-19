@@ -9,6 +9,12 @@ use Runalyze\Profile\Sport\Zones\ZoneInterface;
  */
 class Power implements ZoneInterface
 {
+
+    public function getName()
+    {
+        return __('Power');
+    }
+
     public function getUnit()
     {
         return 'w';

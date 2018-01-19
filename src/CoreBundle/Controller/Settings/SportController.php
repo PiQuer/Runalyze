@@ -7,6 +7,8 @@ use Runalyze\Bundle\CoreBundle\Entity\Sport;
 use Runalyze\Bundle\CoreBundle\Entity\SportRepository;
 use Runalyze\Bundle\CoreBundle\Entity\TrainingRepository;
 use Runalyze\Bundle\CoreBundle\Entity\Type;
+use Runalyze\Bundle\CoreBundle\Entity\Zone;
+use Runalyze\Bundle\CoreBundle\Entity\ZoneRepository;
 use Runalyze\Bundle\CoreBundle\Entity\TypeRepository;
 use Runalyze\Bundle\CoreBundle\Form;
 use Runalyze\Bundle\CoreBundle\Services\AutomaticReloadFlagSetter;
@@ -49,6 +51,14 @@ class SportController extends Controller
         return $this->getDoctrine()->getRepository('CoreBundle:Training');
     }
 
+    /**
+     * @return ZoneRepository
+     */
+    protected function getZoneRepository()
+    {
+        return $this->getDoctrine()->getRepository('CoreBundle:Zone');
+    }
+
 
     /**
      * @Route("", name="settings-sports")
@@ -60,6 +70,27 @@ class SportController extends Controller
             'hasTrainings' => array_flip($this->getTrainingRepository()->getSportsWithTraining($account)),
             'freeInternalTypes' => $this->getSportRepository()->getFreeInternalTypes($account),
             'calendarView' => new DataBrowserRowProfile()
+        ]);
+    }
+
+    /**
+     * @Route("/{sportid}/zone/{metric}", name="sport-zone", requirements={"sportid" = "\d+"})
+     */
+    public function sportZoneEditAction(Request $request, $sportid, $metric, Account $account)
+    {
+       /** $form = $this->createForm(Form\Settings\SportTypeType::class, $type ,[
+            'action' => $this->generateUrl('sport-type-add', ['sportid' => $sportid])
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+        }
+*/
+        return $this->render('settings/sport/form-zone.html.twig', [
+            //'form' => $form->createView(),
+            'sport_id' => $sportid,
+            'metric' => $metric
         ]);
     }
 

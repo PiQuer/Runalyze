@@ -13,6 +13,7 @@
             <tr>
                 <th>&nbsp;</th>
                 <th colspan="2">{{ 'Name'|trans }}</th>
+                <th>{{ 'Zones'|trans }}</th>
                 <th>{{ 'Main sport'|trans }}</th>
                 <th>{{ 'Speed unit'|trans }}</th>
                 <th>{{ 'Default privacy'|trans }}</th>
@@ -32,9 +33,22 @@
                         <td>
                             <a class="window" href="{{ url('sport-edit', {'id': sport.id}) }}"><i class="fa fa-fw fa-pencil"></i></a>
                             <a class="window" href="{{ url('my-search') }}?get=true&amp;sportid={{ sport.id }}" data-size="big"><i class="fa fa-fw fa-search" title="{% trans %}Search activities{% endtrans %}"></i></a>
+                            <div class="inline-menu">
+                                <ul>
+                                    <li class="with-submenu">
+                                        <span class="link"><i class="fa fa-fw fa-bars"></i></span>
+                                        <ul class="submenu">
+                                            <li><a href="{{ url('sport-zone', {'sportid': sport.id, 'metric': 'power'}) }}"><span class="link">{% trans %}Add power zone{% endtrans %}</span></a></li>
+                                            <li><a href="{{ url('sport-zone', {'sportid': sport.id, 'metric': 'heartrate'}) }}"><span class="link">{% trans %}Add heartrate zone{% endtrans %}</span></a></li>
+                                            <li><a href="{{ url('sport-zone', {'sportid': sport.id, 'metric': 'pace'}) }}"><span class="link">{% trans %}Add pace zone{% endtrans %}</span></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </td>
                         <td><i class="{{ sport.img }}"></i></td>
                         <td>{{ sport.name }}</td>
+                        <td>Zonen</td>
                         <td>{% if sport.main %}<i class="fa fa-check"></i>{% endif %}</td>
                         <td class="small">{{ sport.distances ? sport.speedUnit.unit : '' }}</td>
                         <td class="small">{{ sport.defaultPrivacy ? '<i class="fa fa-lock"></i>' : '<i class="fa fa-unlock"></i>' }}</td>
