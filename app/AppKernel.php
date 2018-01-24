@@ -27,6 +27,8 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
             new Bernard\BernardBundle\BernardBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new Runalyze\Bundle\GlossaryBundle\GlossaryBundle(),
+	        new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
         ];
 
         if ('dev' == $this->getEnvironment()) {
@@ -66,6 +68,8 @@ class AppKernel extends \Symfony\Component\HttpKernel\Kernel
 
         $routes->import('@CoreBundle/Controller', '/', 'annotation');
         $routes->import('@GlossaryBundle/Controller', '/glossary', 'annotation');
+        $routes->import('@FOSOAuthServerBundle/Resources/config/routing/token.xml');
+        $routes->import('@FOSOAuthServerBundle/Resources/config/routing/authorize.xml');
     }
 
     /**

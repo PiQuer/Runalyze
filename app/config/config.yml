@@ -6,6 +6,7 @@ imports:
   - { resource: default_config.yml }
   - { resource: expert_config.yml }
   - { resource: ../../data/config.yml }
+  - { resource: api.yml }
 
 framework:
   secret: ThisTokenIsNotSoSecretChangeIt
@@ -25,6 +26,8 @@ framework:
     paths:
       - '%kernel.root_dir%/../vendor/runalyze/translations/xlf'
       - '%kernel.root_dir%/../vendor/runalyze/translations/gettext'
+  serializer:
+    enable_annotations: true
   cache:
     pools:
       app.cache.activity_uploads:

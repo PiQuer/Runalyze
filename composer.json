@@ -35,7 +35,9 @@
         "runalyze/common": "dev-master",
         "runalyze/devices": "dev-master",
         "miniflux/picofeed": "@stable",
-        "runalyze/translations": "dev-master"
+        "runalyze/translations": "dev-master",
+        "friendsofsymfony/oauth-server-bundle": "dev-master",
+        "friendsofsymfony/rest-bundle": "^2.3"
     },
     "autoload": {
         "files": ["src/functions.php", "app/AppKernel.php"],

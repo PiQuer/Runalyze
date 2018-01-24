@@ -1,0 +1,10 @@
+fos_oauth_server:
+    db_driver: orm       # Drivers available: orm, mongodb, or propel
+    client_class:        Runalyze\Bundle\CoreBundle\Entity\ApiClient
+    access_token_class:  Runalyze\Bundle\CoreBundle\Entity\ApiAccessToken
+    refresh_token_class: Runalyze\Bundle\CoreBundle\Entity\ApiRefreshToken
+    auth_code_class:     Runalyze\Bundle\CoreBundle\Entity\ApiAuthCode
+    service:
+            user_provider: runalyzeuser
+            options:
+                supported_scopes: activity_upload
