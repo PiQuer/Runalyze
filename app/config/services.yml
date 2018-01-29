@@ -71,6 +71,9 @@ services:
     class: Runalyze\Bundle\CoreBundle\Entity\AccountRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: [Runalyze\Bundle\CoreBundle\Entity\Account]
+  app.account_provider:
+    class: Runalyze\Bundle\CoreBundle\Services\AccountProvider
+    arguments: ['@app.repository.account']
   app.repository.conf:
     class: Runalyze\Bundle\CoreBundle\Entity\ConfRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]

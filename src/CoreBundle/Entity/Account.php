@@ -212,6 +212,20 @@ class Account implements AdvancedUserInterface, \Serializable, IdentifiableEntit
     protected $equipmentTypes;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\ApiRefreshToken", mappedBy="user", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $refreshTokens;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\ApiAuthCode", mappedBy="user", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $authCodes;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="role", type="tinyint", nullable=true, options={"unsigned":true})
@@ -760,6 +774,22 @@ class Account implements AdvancedUserInterface, \Serializable, IdentifiableEntit
     public function getEquipmentTypes()
     {
         return $this->equipmentTypes;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAuthCodes()
+    {
+        return $this->authCodes;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRefreshTokens()
+    {
+        return $this->refreshTokens;
     }
 
     /** @see \Serializable::serialize() */

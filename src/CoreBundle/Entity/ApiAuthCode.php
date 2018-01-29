@@ -6,7 +6,8 @@ use FOS\OAuthServerBundle\Entity\AuthCode as BaseAuthCode;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Table(name="api_auth_code")
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\ApiAuthCodeRepository")
  */
 class ApiAuthCode extends BaseAuthCode
 {

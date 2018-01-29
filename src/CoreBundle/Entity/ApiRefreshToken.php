@@ -8,7 +8,8 @@ use Runalyze\Bundle\CoreBundle\Entity\ApiClient;
 use Runalyze\Bundle\CoreBundle\Entity\Account;
 
 /**
- * @ORM\Entity
+ * @ORM\Table(name="api_refresh_token")
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\ApiRefreshTokenRepository")
  */
 class ApiRefreshToken extends BaseRefreshToken
 {

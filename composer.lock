@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e49418ab39ece9dc684d83012e967e5",
+    "content-hash": "c8a55c1c29e27017cc1a8a962c5fede7",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -1313,37 +1313,40 @@
         },
         {
             "name": "friendsofsymfony/oauth-server-bundle",
-            "version": "dev-master",
+            "version": "1.6.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSOAuthServerBundle.git",
-                "reference": "c0382eb4a1c47c394770206754c687102ef17a12"
+                "reference": "ed3ec73e60bbb936181015e29371226e1638832d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSOAuthServerBundle/zipball/c0382eb4a1c47c394770206754c687102ef17a12",
-                "reference": "c0382eb4a1c47c394770206754c687102ef17a12",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSOAuthServerBundle/zipball/ed3ec73e60bbb936181015e29371226e1638832d",
+                "reference": "ed3ec73e60bbb936181015e29371226e1638832d",
                 "shasum": ""
             },
             "require": {
                 "friendsofsymfony/oauth2-php": "~1.1",
-                "php": "^7.1",
+                "paragonie/random_compat": "^1|^2",
+                "php": "^5.5|^7.0",
                 "symfony/dependency-injection": "^2.8|~3.0|^4.0",
-                "symfony/framework-bundle": "~3.0|^4.0",
-                "symfony/security-bundle": "~3.0|^4.0"
+                "symfony/framework-bundle": "~2.8|~3.0|^4.0",
+                "symfony/security-bundle": "~2.8|~3.0|^4.0"
             },
             "require-dev": {
                 "doctrine/doctrine-bundle": "~1.0",
                 "doctrine/mongodb-odm": "~1.0",
                 "doctrine/orm": "~2.2",
                 "phing/phing": "~2.4",
+                "php-mock/php-mock-phpunit": "^1.1",
                 "phpunit/phpunit": "~4.8|~5.0",
                 "propel/propel1": "^1.6.5",
-                "symfony/class-loader": "~3.0|^4.0",
-                "symfony/console": "~3.0|^4.0",
-                "symfony/form": "~3.0|^4.0",
-                "symfony/templating": "~3.0|^4.0",
-                "symfony/yaml": "~3.0|^4.0",
+                "symfony/class-loader": "~2.8|~3.0|^4.0",
+                "symfony/console": "~2.8|~3.0|^4.0",
+                "symfony/form": "~2.8|~3.0|^4.0",
+                "symfony/phpunit-bridge": "~2.8|~3.0|^4.0",
+                "symfony/templating": "~2.8|~3.0|^4.0",
+                "symfony/yaml": "~2.8|~3.0|^4.0",
                 "willdurand/propel-typehintable-behavior": "^1.0.4"
             },
             "suggest": {
@@ -1357,7 +1360,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "1.5-dev"
                 }
             },
             "autoload": {
@@ -1389,7 +1392,7 @@
                 "oauth2",
                 "server"
             ],
-            "time": "2018-01-12 15:24:20"
+            "time": "2018-01-19 17:30:33"
         },
         {
             "name": "friendsofsymfony/oauth2-php",
@@ -3682,16 +3685,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.4.2",
+            "version": "v3.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "29961b693fa2157a3f349d1a801f9f8742be4e03"
+                "reference": "5220b6f9fcdee261c6fdd3e096f3b204fba5d906"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/29961b693fa2157a3f349d1a801f9f8742be4e03",
-                "reference": "29961b693fa2157a3f349d1a801f9f8742be4e03",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/5220b6f9fcdee261c6fdd3e096f3b204fba5d906",
+                "reference": "5220b6f9fcdee261c6fdd3e096f3b204fba5d906",
                 "shasum": ""
             },
             "require": {
@@ -3709,7 +3712,6 @@
                 "symfony/polyfill-mbstring": "~1.0",
                 "symfony/polyfill-php56": "~1.0",
                 "symfony/polyfill-php70": "~1.6",
-                "symfony/polyfill-util": "~1.0",
                 "twig/twig": "^1.35|^2.4.4"
             },
             "conflict": {
@@ -3833,7 +3835,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-12-15T02:05:35+00:00"
+            "time": "2018-01-29T12:30:04+00:00"
         },
         {
             "name": "twig/extensions",
@@ -5549,7 +5551,6 @@
         "runalyze/devices": 20,
         "miniflux/picofeed": 0,
         "runalyze/translations": 20,
-        "friendsofsymfony/oauth-server-bundle": 20,
         "runalyze/playground": 20
     },
     "prefer-stable": true,

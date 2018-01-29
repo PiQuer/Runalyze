@@ -35,11 +35,23 @@ security:
             pattern:  ^/(update|install)
             security: false
 
+        oauth_token:
+            pattern:    ^/oauth/v2/token
+            security:   false
+
+        oauth_authorize:
+            pattern:    ^/oauth/v2/auth
+            form_login:
+                provider: runalyzeuser
+                check_path: login_check
+                login_path: login
+            anonymous: true
+
         api:
             pattern:    ^/api
             fos_oauth:  true
             stateless:  true
-            anonymous:  true
+            anonymous:  false
 
     access_control:
         - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }

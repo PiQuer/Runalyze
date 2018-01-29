@@ -1,9 +1,11 @@
 <?php
 namespace Runalyze\Bundle\CoreBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use FOS\OAuthServerBundle\Model\ClientManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class OauthClientCreateCommand extends ContainerAwareCommand
@@ -11,7 +13,7 @@ class OauthClientCreateCommand extends ContainerAwareCommand
     protected function configure ()
     {
         $this
-            ->setName('fos:oauth-server:client-create')
+            ->setName('runalyze:api:create-client')
             ->setDescription('Creates a new client')
             ->addOption('name', null, InputOption::VALUE_OPTIONAL, 'Client name')
             ->addOption('mail', null, InputOption::VALUE_OPTIONAL, 'Contact mail')
@@ -23,13 +25,29 @@ class OauthClientCreateCommand extends ContainerAwareCommand
     protected function execute (InputInterface $input, OutputInterface $output)
     {
         $clientManager = $this->getContainer()->get('fos_oauth_server.client_manager.default');
+        $io = new SymfonyStyle($input, $output);
+
+        $io->title('Client Credentials');
+
         $client = $clientManager->createClient();
         $client->setRedirectUris($input->getOption('redirect-uri'));
         $client->setAllowedGrantTypes($input->getOption('grant-type'));
         $client->setName($input->getOption('name'));
-        $client->setContactMail($input->getOption('mail'));
+        $client->setMail($input->getOption('mail'));
         $client->setUrl($input->getOption('url'));
         $clientManager->updateClient($client);
         $output->writeln(sprintf('Added a new client with  public id <info>%s</info>.', $client->getPublicId()));
+
+
+        // Give the credentials back to the user
+        $headers = ['Client ID', 'Client Secret'];
+        $rows = [
+            [$client->getPublicId(), $client->getSecret()],
+        ];
+
+        $io->table($headers, $rows);
+
+        return 0;
+
     }
 }

@@ -6,7 +6,8 @@ use FOS\OAuthServerBundle\Entity\Client as BaseClient;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Table(name="api_client")
+ * @ORM\Entity(repositoryClass="Runalyze\Bundle\CoreBundle\Entity\ApiClientRepository")
  */
 class ApiClient extends BaseClient
 {
@@ -46,9 +47,9 @@ class ApiClient extends BaseClient
     /**
      * @var string
      *
-     * @ORM\Column(name="contactMail", type="string", length=100, nullable=false)
+     * @ORM\Column(name="mail", type="string", length=100, nullable=false)
      */
-    private $contactMail;
+    private $mail;
 
     /**
      * @var string
@@ -130,25 +131,25 @@ class ApiClient extends BaseClient
     }
 
     /**
-     * Set contactMail
+     * Set mail
      *
-     * @param string $contactMail
+     * @param string $mail
      * @return $this
      */
-    public function setContactMail($contactMail)
+    public function setMail($mail)
     {
-        $this->contactMail = $contactMail;
+        $this->mail = $mail;
         return $this;
     }
 
     /**
-     * Get contactMail
+     * Get mail
      *
      * @return string
      */
-    public function getContactMail()
+    public function getMail()
     {
-        return $this->contactMail;
+        return $this->mail;
     }
 
     /**
