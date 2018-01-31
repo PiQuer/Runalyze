@@ -3,4 +3,7 @@
 {% block form %}
     {% include 'login/_form.html.twig' with {'num': num, 'error': error} %}
 
+<p class="c">{% trans %}or{% endtrans %}</p>
+    {% include 'register/_form.html.twig' with {'num': num, 'form': form} %}
+
 {% endblock %}

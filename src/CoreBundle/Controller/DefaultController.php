@@ -61,7 +61,14 @@ class DefaultController extends AbstractPluginsAwareController
             return $this->redirect($this->generateUrl('dashboard'));
         }
 
-        return $this->forward('CoreBundle:Default:register', $request->attributes->all());
+        $account = new Account();
+        $registrationForm = $this->createForm(RegistrationType::class, $account);
+        return $this->render('login/combined.html.twig', [
+            'form' => $registrationForm->createView(),
+            'num' => $this->collectStatistics()
+        ]);
+
+        //return $this->forward('CoreBundle:Default:register', $request->attributes->all());
     }
 
     /**
