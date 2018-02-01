@@ -27,7 +27,7 @@ class ApiAuthCode extends BaseAuthCode
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account", inversedBy="authCodes")
      */
     protected $user;
 }

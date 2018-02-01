@@ -29,7 +29,7 @@ class ApiRefreshToken extends BaseRefreshToken
     /**
      * @var \Runalyze\Bundle\CoreBundle\Entity\Account
      *
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\Account", inversedBy="refreshTokens")
      */
     protected $user;
 }
