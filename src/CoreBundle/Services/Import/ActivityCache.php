@@ -103,12 +103,19 @@ class ActivityCache
         $activityToMerge->setGroundcontact($activityFromCache->getGroundcontact());
         $activityToMerge->setGroundcontactBalance($activityFromCache->getGroundcontactBalance());
         $activityToMerge->setVerticalOscillation($activityFromCache->getVerticalOscillation());
+        $activityToMerge->setAvgImpactGsLeft($activityFromCache->getAvgImpactGsLeft());
+        $activityToMerge->setAvgImpactGsRight($activityFromCache->getAvgImpactGsRight());
+        $activityToMerge->setAvgBrakingGsLeft($activityFromCache->getAvgBrakingGsLeft());
+        $activityToMerge->setAvgBrakingGsRight($activityFromCache->getAvgBrakingGsRight());
+        $activityToMerge->setAvgFootstrikeTypeLeft($activityFromCache->getAvgFootstrikeTypeLeft());
+        $activityToMerge->setAvgFootstrikeTypeRight($activityFromCache->getAvgFootstrikeTypeRight());
+        $activityToMerge->setAvgPronationExcursionLeft($activityFromCache->getAvgPronationExcursionLeft());
+        $activityToMerge->setAvgPronationExcursionRight($activityFromCache->getAvgPronationExcursionRight());
         $activityToMerge->setCreator($activityFromCache->getCreator());
         $activityToMerge->setCreatorDetails($activityFromCache->getCreatorDetails());
         $activityToMerge->setActivityId($activityFromCache->getActivityId());
-        $activityToMerge->setPowerCalculated($activityFromCache->isPowerCalculated());
 
-        if (null === $activityToMerge->getPower()) {
+        if (null !== $activityFromCache->isPowerCalculated()) {
             $activityToMerge->setPower($activityFromCache->getPower());
         }
     }
