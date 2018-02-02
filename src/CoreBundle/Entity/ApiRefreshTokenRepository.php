@@ -7,6 +7,18 @@ use Doctrine\ORM\EntityRepository;
 class ApiRefreshTokenRepository extends EntityRepository
 {
 
+    /**
+     * @param Account $account
+     * @return ApiRefreshToken[]
+     */
+    public function findByAccount(Account $account)
+    {
+        return $this->findBy([
+            'user' => $account->getId()
+        ]);
+    }
+
+
     public function save(ApiRefreshToken $apiRefreshToken)
     {
         $this->_em->persist($apiRefreshToken);

@@ -11,7 +11,7 @@
     <input type="submit" name="accepted" value="{{ 'authorize.accept'|trans({}, 'FOSOAuthServerBundle') }}" />
     <input type="submit" name="rejected" value="{{ 'authorize.reject'|trans({}, 'FOSOAuthServerBundle') }}" />
 
-{{ form_row(form.client_id) }}
+    {{ form_row(form.client_id) }}
     {{ form_row(form.response_type) }}
     {{ form_row(form.redirect_uri) }}
     {{ form_row(form.state) }}

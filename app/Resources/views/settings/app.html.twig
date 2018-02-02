@@ -1,0 +1,22 @@
+{% extends "base_logged_in.twig" %}
+
+{% block content %}
+<div class="panel-heading">
+    <h1>{% trans %}My apps{% endtrans %}</h1>
+</div>
+<div class="panel-content">
+    <div class="panel-content">
+        {% include 'flashmessages.html.twig' %}
+
+        {% if connectedApps is empty %}
+            <p class="info">{% trans %}You don't have any apps associated with your account.{% endtrans %}</p>
+        {% else %}
+        {% for app in connectedApps %}
+            {# @var app \Runalyze\Bundle\CoreBundle\Entity\ApiRefreshTokenRepository #}
+            {{ app.client.name }}
+            {{  app.client.description }}
+            {% trans %}Website{% endtrans %}: {{ app.client.url }}
+        {% endfor %}
+
+        {% endif %}
+{% endblock %}

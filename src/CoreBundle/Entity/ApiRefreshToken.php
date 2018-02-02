@@ -21,7 +21,7 @@ class ApiRefreshToken extends BaseRefreshToken
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\ApiClient")
+     * @ORM\ManyToOne(targetEntity="Runalyze\Bundle\CoreBundle\Entity\ApiClientRepository")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $client;

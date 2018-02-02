@@ -1,13 +1,13 @@
 <?php
 
-namespace Runalyze\Bundle\CoreBundle\Controller\Api\V1;
+namespace Runalyze\Bundle\CoreBundle\Controller\Api;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * @Route("/api/v1/activities")
+ * @Route("/api")
  */
 class ActivityController extends Controller
 {
