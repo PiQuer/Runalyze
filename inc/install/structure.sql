@@ -503,6 +503,14 @@ CREATE TABLE IF NOT EXISTS `runalyze_notification` (
 
 -- --------------------------------------------------------
 
+CREATE TABLE runalyze_api_access_token (id INT AUTO_INCREMENT NOT NULL, client_id INT NOT NULL, user_id INT UNSIGNED DEFAULT NULL, token VARCHAR(255) NOT NULL, expires_at INT DEFAULT NULL, scope VARCHAR(255) DEFAULT NULL, UNIQUE INDEX UNIQ_630AEB325F37A13B (token), INDEX IDX_630AEB3219EB6921 (client_id), INDEX IDX_630AEB32A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE runalyze_api_authorized_client (id INT AUTO_INCREMENT NOT NULL, client_id INT NOT NULL, account_id INT UNSIGNED DEFAULT NULL, INDEX IDX_EDBE9B5419EB6921 (client_id), INDEX IDX_EDBE9B549B6B5FBA (account_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE runalyze_api_client (id INT AUTO_INCREMENT NOT NULL, random_id VARCHAR(255) NOT NULL, redirect_uris LONGTEXT NOT NULL COMMENT '(DC2Type:array)', secret VARCHAR(255) NOT NULL, allowed_grant_types LONGTEXT NOT NULL COMMENT '(DC2Type:array)', name VARCHAR(50) NOT NULL, description TEXT DEFAULT NULL, internal_note TEXT DEFAULT NULL, mail VARCHAR(100) NOT NULL, url VARCHAR(255) NOT NULL, created INT UNSIGNED DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE runalyze_api_refresh_token (id INT AUTO_INCREMENT NOT NULL, client_id INT NOT NULL, user_id INT UNSIGNED DEFAULT NULL, token VARCHAR(255) NOT NULL, expires_at INT DEFAULT NULL, scope VARCHAR(255) DEFAULT NULL, UNIQUE INDEX UNIQ_4C2431495F37A13B (token), INDEX IDX_4C24314919EB6921 (client_id), INDEX IDX_4C243149A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE runalyze_api_auth_code (id INT AUTO_INCREMENT NOT NULL, client_id INT NOT NULL, user_id INT UNSIGNED DEFAULT NULL, token VARCHAR(255) NOT NULL, redirect_uri LONGTEXT NOT NULL, expires_at INT DEFAULT NULL, scope VARCHAR(255) DEFAULT NULL, UNIQUE INDEX UNIQ_BC739ACC5F37A13B (token), INDEX IDX_BC739ACC19EB6921 (client_id), INDEX IDX_BC739ACCA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+
+
 --
 -- Indizes der exportierten Tabellen
 --
@@ -792,3 +800,13 @@ ALTER TABLE `runalyze_sport` ADD FOREIGN KEY (`default_typeid`) REFERENCES `runa
 -- Constraints der Tabelle `runalyze_notification`
 --
 ALTER TABLE runalyze_notification ADD CONSTRAINT FK_F99B51889B6B5FBA FOREIGN KEY (account_id) REFERENCES runalyze_account (id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+ALTER TABLE runalyze_api_access_token ADD CONSTRAINT FK_630AEB3219EB6921 FOREIGN KEY (client_id) REFERENCES runalyze_api_client (id);
+ALTER TABLE runalyze_api_access_token ADD CONSTRAINT FK_630AEB32A76ED395 FOREIGN KEY (user_id) REFERENCES runalyze_account (id);
+ALTER TABLE runalyze_api_authorized_client ADD CONSTRAINT FK_EDBE9B5419EB6921 FOREIGN KEY (client_id) REFERENCES runalyze_api_client (id);
+ALTER TABLE runalyze_api_authorized_client ADD CONSTRAINT FK_EDBE9B549B6B5FBA FOREIGN KEY (account_id) REFERENCES runalyze_account (id);
+ALTER TABLE runalyze_api_refresh_token ADD CONSTRAINT FK_4C24314919EB6921 FOREIGN KEY (client_id) REFERENCES runalyze_api_client (id);
+ALTER TABLE runalyze_api_refresh_token ADD CONSTRAINT FK_4C243149A76ED395 FOREIGN KEY (user_id) REFERENCES runalyze_account (id);
+ALTER TABLE runalyze_api_auth_code ADD CONSTRAINT FK_BC739ACC19EB6921 FOREIGN KEY (client_id) REFERENCES runalyze_api_client (id);
+ALTER TABLE runalyze_api_auth_code ADD CONSTRAINT FK_BC739ACCA76ED395 FOREIGN KEY (user_id) REFERENCES runalyze_account (id);
