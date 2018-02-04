@@ -226,6 +226,13 @@ class Account implements AdvancedUserInterface, \Serializable, IdentifiableEntit
     protected $authCodes;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Runalyze\Bundle\CoreBundle\Entity\ApiAuthorizedClient", mappedBy="account", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $authorizedClients;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="role", type="tinyint", nullable=true, options={"unsigned":true})
@@ -782,6 +789,14 @@ class Account implements AdvancedUserInterface, \Serializable, IdentifiableEntit
     public function getAuthCodes()
     {
         return $this->authCodes;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAuthorizedClients()
+    {
+        return $this->authorizedClients;
     }
 
     /**
