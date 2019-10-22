@@ -1729,17 +1729,17 @@
             "time": "2016-02-03T16:31:33+00:00"
         },
         {
-            "name": "miniflux/picofeed",
+            "name": "aaronpk/picofeed",
             "version": "v0.1.35",
             "source": {
                 "type": "git",
-                "url": "https://github.com/miniflux/picoFeed.git",
-                "reference": "3a27b47de31eedec075c719f961783c5db7a7b08"
+                "url": "https://github.com/aaronpk/picoFeed.git",
+                "reference": "b2a48acb026df91d2e21dfc8b4edbc1fc48f01f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/miniflux/picoFeed/zipball/3a27b47de31eedec075c719f961783c5db7a7b08",
-                "reference": "3a27b47de31eedec075c719f961783c5db7a7b08",
+                "url": "https://api.github.com/repos/aaronpk/picoFeed/zipball/b2a48acb026df91d2e21dfc8b4edbc1fc48f01f1",
+                "reference": "b2a48acb026df91d2e21dfc8b4edbc1fc48f01f1",
                 "shasum": ""
             },
             "require": {
